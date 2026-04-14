@@ -1,0 +1,791 @@
+[
+  {
+    "cedula": "9579256",
+    "nombre": "LAURENCE MARTINEZ",
+    "Telf": "04127249450",
+    "Correo": "laurencemartinez5@gmail.com",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "03S-0913-D1",
+    "dia": "MARTES",
+    "aula": "LSBA-080",
+    "horario": "7:00 - 10:00",
+    "asistio": true
+  }
+  {
+     "cedula": "9579256",
+    "nombre": "LAURENCE MARTINEZ",
+    "Telf": "04127249450",
+    "Correo": "laurencemartinez5@gmail.com",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "03S-0913-D1",
+    "dia": "MARTES",
+    "aula": "LSBA-070",
+    "horario": "10:00 - 13:00",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "10841561",
+    "nombre": "JHONNY BLANCO",
+    "Telf": "4161058041",
+    "Correo": "jhonnyblancounefalara@gmail.com",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "00S-0913-N1",
+    "dia": "MARTES",
+    "aula": "LSBA-074",
+    "horario": "12:15 - 14:30",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "10841561",
+    "nombre": "JOSE GREGORIO PARRA",
+    "Telf": "4164508207",
+    "Correo": "josegparrah@gmail.com",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "00S-0913-N1",
+    "dia": "MARTES",
+    "aula": "LSBA-076",
+    "horario": "13:45 - 16:00",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "10841561",
+    "nombre": "JOSE GREGORIO PARRA",
+    "Telf": "4164508207",
+    "Correo": "josegparrah@gmail.com",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "06S-0913-D1",
+    "dia": "JUEVES",
+    "aula": "LSBA-076",
+    "horario": "13:45 - 16:00",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "10841561",
+    "nombre": "JOSE GREGORIO PARRA",
+    "Telf": "4164508207",
+    "Correo": "josegparrah@gmail.com",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "07S-0913-D2",
+    "dia": "JUEVES",
+    "aula": "LSBA-050",
+    "horario": "13:45 - 16:00",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "7423563",
+    "nombre": "PEDRO PABLO LUCENA",
+    "Telf": "4245671921",
+    "Correo": "jserranozerpa@gmail.com",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "07S-0913-D1",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-062",
+    "horario": "14:30 - 17:30",
+    "asistio": true
+
+  }
+
+
+{
+   "cedula": "14624965",
+    "nombre": "WILFREDO CARRASCO",
+    "Telf": "04161047773",
+    "Correo": "wilfredocarrasco2006@hotmail.com",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "05S-0913-D1",
+    "dia": "LUNES",
+    "aula": "LSBA-075",
+    "horario": "13:00 - 16:00",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "14624965",
+    "nombre": "WILFREDO CARRASCO",
+    "Telf": "04161047773",
+    "Correo": "wilfredocarrasco2006@hotmail.com",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "05S-0913-D1",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-075",
+    "horario": "13:45 - 16:45",
+    "asistio": true
+
+  }
+
+
+{
+   "cedula": "11504089",
+    "nombre": "JOSE EDUARDO SANCHEZ",
+    "Telf": "04161047773",
+    "Correo": "franciscolara2474@gmail.com",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "08S-0913-D1",
+    "dia": "MARTES",
+    "aula": "LSBA-044",
+    "horario": "07:00 - 10:00",
+    "asistio": true
+
+  }
+
+
+{
+   "cedula": "17034748",
+    "nombre": "MANUEL PEROZO",
+    "Telf": "04145419355",
+    "Correo": "adonaismp@gmail.com",
+    "carrera": "SISTEMAS",
+    "SECCION": "01S-2613-D1",
+    "dia": "MARTES",
+    "aula": "LSBA-008",
+    "horario": "13:45 - 16:45",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "17034748",
+    "nombre": "MANUEL PEROZO",
+    "Telf": "04145419355",
+    "Correo": "adonaismp@gmail.com",
+    "carrera": "SISTEMAS",
+    "SECCION": "01S-2613-D2",
+    "dia": "JUEVES",
+    "aula": "LSBA-008",
+    "horario": "14:30 - 17:30",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "14175652",
+    "nombre": "HENRY LEONARDO PAREDES",
+    "Telf": "04245807715",
+    "Correo": "Leonpar14@Gmail.com",
+    "carrera": "SISTEMAS",
+    "SECCION": "05S-2613-D1",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-081",
+    "horario": "16:30 - 19:00",
+    "asistio": true
+
+  }
+
+
+{
+   "cedula": "14175652",
+    "nombre": "HENRY LEONARDO PAREDES",
+    "Telf": "04245807715",
+    "Correo": "Leonpar14@Gmail.com",
+    "carrera": "ELECTRICA",
+    "SECCION": "05S-2613-D1",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-074",
+    "horario": "13:00 - 16:00",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "14998074",
+    "nombre": "JEAMS COROBA",
+    "Telf": "04161291990",
+    "Correo": "Jeamscoroba85@gmail ",
+    "carrera": "ELECTRICA",
+    "SECCION": "07S-2013-D1",
+    "dia": "JUEVES",
+    "aula": "LSBA-070",
+    "horario": "13:00 - 16:00",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "11792204",
+    "nombre": "ORLANDO JAVIER",
+    "Telf": "4125041205",
+    "Correo": "Orlandoromerounefalara@gmail.com",
+    "carrera": "SISTEMAS",
+    "SECCION": "04S-2613-D2",
+    "dia": "MARTES",
+    "aula": "LSBA-057",
+    "horario": "13:00 - 16:00",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "12111795",
+    "nombre": "PABLO SANCHEZ",
+    "Telf": "04125181482",
+    "Correo": "Pabloescalona1983@gmail com",
+    "carrera": "SISTEMAS",
+    "SECCION": "03S-2613-D2",
+    "dia": "LUNES",
+    "aula": "LSBA-080",
+    "horario": "13:00 - 16:00",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "12111795",
+    "nombre": "PABLO SANCHEZ",
+    "Telf": "04125181482",
+    "Correo": "Pabloescalona1983@gmail com",
+    "carrera": "SISTEMAS",
+    "SECCION": "06S-2613-D1",
+    "dia": "LUNES",
+    "aula": "LSBA-071",
+    "horario": "16:00 - 17:30",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "12111795",
+    "nombre": "PABLO SANCHEZ",
+    "Telf": "04125181482",
+    "Correo": "Pabloescalona1983@gmail com",
+    "carrera": "SISTEMAS",
+    "SECCION": "06S-2613-D1",
+    "dia": "MARTES",
+    "aula": "LSBA-071",
+    "horario": "16:00 - 17:30",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "15307674",
+    "nombre": "JOHANA MILESSA SUAREZ",
+    "Telf": "04129266955",
+    "Correo": "ttesuarezlopez@gmail.com",
+    "carrera": "SISTEMAS",
+    "SECCION": "02S-2613-D1",
+    "dia": "MARTES",
+    "aula": "LSBA-009",
+    "horario": "13:45 - 16:45",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "10845332",
+    "nombre": "JAVIER PASTOR RODRIGUEZ",
+    "Telf": "04245137354",
+    "Correo": "rodriguezsalasjavier@gmail.com",
+    "carrera": "SISTEMAS",
+    "SECCION": "01S-2613-D7",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-054",
+    "horario": "10:00 - 13:00",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "10845332",
+    "nombre": "JAVIER PASTOR RODRIGUEZ",
+    "Telf": "04245137354",
+    "Correo": "rodriguezsalasjavier@gmail.com",
+    "carrera": "SISTEMAS",
+    "SECCION": "03S-2613-D1",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-081",
+    "horario": "13:45 - 16:45",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "7469567",
+    "nombre": "ALEXANDER ZERPA",
+    "Telf": "04163557183",
+    "Correo": "alexzerpa1@gmail.com",
+    "carrera": "SISTEMAS",
+    "SECCION": "07S-2613-N1",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-042",
+    "horario": "17:30 - 20:30",
+    "asistio": true
+
+  }
+
+{
+   "cedula": "7469567",
+    "nombre": "ALEXANDER ZERPA",
+    "Telf": "04163557183",
+    "Correo": "alexzerpa1@gmail.com",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "07S-2613-N1",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-042",
+    "horario": "17:30 - 20:30",
+    "asistio": true
+
+  }
+
+
+   "cedula": "7469567",
+    "nombre": "ALEXANDER ZERPA",
+    "Telf": "04163557183",
+    "Correo": "alexzerpa1@gmail.com",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "08S-0913-N1 ",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-046",
+    "horario": "17:30 - 20:30",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "7469567",
+    "nombre": "ALEXANDER ZERPA",
+    "Telf": "04163557183",
+    "Correo": "alexzerpa1@gmail.com",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "07S-0913-N1",
+    "dia": "VIERNES",
+    "aula": "LSBA-054",
+    "horario": "17:30 - 20:30",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "7469567",
+    "nombre": "ALEXANDER ZERPA",
+    "Telf": "04163557183",
+    "Correo": "alexzerpa1@gmail.com",
+    "carrera": "SISTEMAS",
+    "SECCION": "08S-2613-N1",
+    "dia": "SABADO",
+    "aula": "LSBA-044",
+    "horario": "07:00 - 10:00",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "19149570",
+    "nombre": "INDIRA OROPEZA",
+    "Telf": "4167583967",
+    "Correo": "indiraoropeza.ejercito.unefala@gmail.com",
+    "carrera": "SISTEMAS",
+    "SECCION": "00S-0313-D4",
+    "dia": "JUEVES",
+    "aula": "LSBA-067",
+    "horario": "10:00 - 12:15",
+    "asistio": true
+
+  }
+
+"cedula": "16139489",
+    "nombre": "JAVIER COLMENAREZ",
+    "Telf": "04266525983",
+    "Correo": "colmenarezjavierunefalara@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "02S-0313-D5",
+    "dia": "MARTES",
+    "aula": "LSBA-047",
+    "horario": "12:15 - 15:15",
+    "asistio": true
+
+
+
+}
+
+
+   "cedula": "16139489",
+    "nombre": "JAVIER COLMENAREZ",
+    "Telf": "04266525983",
+    "Correo": "colmenarezjavierunefalara@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "03S-0313-D3",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-057",
+    "horario": "13:00 - 16:00",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "4733943",
+    "nombre": "GLORIA OMAIRA VERA",
+    "Telf": "04121865347",
+    "Correo": "omairaunefalara@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "04S-0313-D2",
+    "dia": "LUNES",
+    "aula": "LSBA-060",
+    "horario": "10:00 - 13:00",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "4733943",
+    "nombre": "GLORIA OMAIRA VERA",
+    "Telf": "04121865347",
+    "Correo": "omairaunefalara@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "04S-0313-D1",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-059",
+    "horario": "07:00 - 10:00",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "4733943",
+    "nombre": "GLORIA OMAIRA VERA",
+    "Telf": "04121865347",
+    "Correo": "omairaunefalara@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "03S-0313-D1",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-034",
+    "horario": "10:00 - 13:00",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "4733943",
+    "nombre": "GLORIA OMAIRA VERA",
+    "Telf": "04121865347",
+    "Correo": "omairaunefalara@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "03S-0313-D5",
+    "dia": "VIERNES",
+    "aula": "LSBA-035",
+    "horario": "11:30 - 14:30",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "14512135",
+    "nombre": "ALEXIS RODRIGUEZ",
+    "Telf": "04245258521",
+    "Correo": "arnrodrigueznamias@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "04S-0313-D4",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-062",
+    "horario": "07:00 - 10:00",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "14512135",
+    "nombre": "ALEXIS RODRIGUEZ",
+    "Telf": "04245258521",
+    "Correo": "arnrodrigueznamias@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "04S-0313-D3",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-063",
+    "horario": "10:30 - 13:00",
+    "asistio": true
+
+  }
+
+
+}
+
+
+   "cedula": "11790563",
+    "nombre": "ANA DEL CARMEN MARTINEZ",
+    "Telf": "04163535671",
+    "Correo": "anamartinezunefalara@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "01S-0313-D4",
+    "dia": "LUNES",
+    "aula": "LSBA-040",
+    "horario": "14:30 - 17:30",
+    "asistio": true
+
+  }
+
+
+}
+
+
+   "cedula": "11790563",
+    "nombre": "ANA DEL CARMEN MARTINEZ",
+    "Telf": "04163535671",
+    "Correo": "anamartinezunefalara@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "01S-0313-D5",
+    "dia": "MARTES",
+    "aula": "LSBA-053",
+    "horario": "13:00 - 16:00",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "19251421",
+    "nombre": "FRANCISCO LOYO",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "03S-0313-D2",
+    "dia": "JUEVES",
+    "aula": "LSBA-056",
+    "horario": "07:00 - 10:00",
+    "asistio": true
+
+  }
+
+
+}
+
+
+   "cedula": "19251421",
+    "nombre": "FRANCISCO LOYO",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "03S-0313-D4",
+    "dia": "JUEVES",
+    "aula": "LSBA-052",
+    "horario": "10:00 - 13:00",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "16385113",
+    "nombre": "AURELIX JIMENEZ",
+    "Telf": "04241694575",
+    "Correo": "aurejp09@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-0313-D5",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-065",
+    "horario": "13:00 - 15:15",
+    "asistio": true
+
+  }
+
+
+}
+
+
+   "cedula": "15960332",
+    "nombre": "YENI SARMIENTO",
+    "Telf": "04166014401",
+    "Correo": "yenisarmiento27@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "02S-0313-D3",
+    "dia": "MARTES",
+    "aula": "LSBA-043",
+    "horario": "07:00 - 10:00",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "15960332",
+    "nombre": "YENI SARMIENTO",
+    "Telf": "04166014401",
+    "Correo": "yenisarmiento27@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "01S-0313-D1",
+    "dia": "JUEVES",
+    "aula": "LSBA-044",
+    "horario": "07:00 - 10:00",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "15960332",
+    "nombre": "YENI SARMIENTO",
+    "Telf": "04166014401",
+    "Correo": "yenisarmiento27@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "01S-0313-D2",
+    "dia": "JUEVES",
+    "aula": "LSBA-045",
+    "horario": "10:00 - 13:00",
+    "asistio": true
+
+  }
+
+
+}
+
+
+   "cedula": "15960332",
+    "nombre": "YENI SARMIENTO",
+    "Telf": "04166014401",
+    "Correo": "yenisarmiento27@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "01S-0313-D3",
+    "dia": "JUEVES",
+    "aula": "LSBA-047",
+    "horario": "13:00 - 16:00",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "PENDIENTE",
+    "nombre": "JESUS ALBERTO LUZARDO",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "01S-0313-D8",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-001",
+    "horario": "08:30 - 11:30",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "PENDIENTE",
+    "nombre": "JESUS ALBERTO LUZARDO",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "01S-0313-D8",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-001",
+    "horario": "08:30 - 11:30",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "PENDIENTE",
+    "nombre": "JESUS ALBERTO LUZARDO",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-0313-D12",
+    "dia": "JUEVES",
+    "aula": "LSBA-120",
+    "horario": "12:15 - 14:30",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "PENDIENTE",
+    "nombre": "JESUS ALBERTO LUZARDO",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-0313-D12",
+    "dia": "JUEVES",
+    "aula": "LSBA-121",
+    "horario": "14:30 - 16:45",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "5723613",
+    "nombre": "JESUS BERMUDEZ",
+    "Telf": "4149237330",
+    "Correo": "jesusbermudezhernandez@gmail.com",
+    "carrera": "ELECTRICA",
+    "SECCION": "08S-2213-D1",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-036",
+    "horario": "09:15 - 12:15",
+    "asistio": true
+
+  }
+
+}
+
+
+   "cedula": "7323090",
+    "nombre": "JOSE MANUEL TORRES",
+    "Telf": "04120836327",
+    "Correo": "abg.josemtorresr@gmail.com",
+    "carrera": "AGRONOMIA",
+    "SECCION": "03S-2213-D1",
+    "dia": "JUEVES",
+    "aula": "LSBA-077",
+    "horario": "07:00 - 10:00",
+    "asistio": true
+
+  }
+
+
+}
+
+
+   "cedula": "7323090",
+    "nombre": "JOSE MANUEL TORRES",
+    "Telf": "04120836327",
+    "Correo": "abg.josemtorresr@gmail.com",
+    "carrera": "AGRONOMIA",
+    "SECCION": "01S-2013-D1",
+    "dia": "JUEVES",
+    "aula": "LSBA-069",
+    "horario": "10:00 - 13:00",
+    "asistio": true
+
+  }
+
+
+
+]

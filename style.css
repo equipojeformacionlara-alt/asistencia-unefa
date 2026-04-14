@@ -1,0 +1,182 @@
+/* Paleta de Colores y Variables */
+:root {
+    --primary-color: #1a2a6c;   /* Azul Institucional */
+    --accent-color: #f2a900;    /* Dorado/Amarillo UNEFA */
+    --bg-color: #f4f7f6;
+    --card-bg: #ffffff;
+    --text-main: #333333;
+    --text-muted: #666666;
+    --success: #27ae60;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Configuración Base */
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+h1 {
+    text-align: center;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    border-bottom: 3px solid var(--accent-color);
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+/* Sección de Controles (Filtros) */
+.controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    background: #eef2f3;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: var(--primary-color);
+}
+
+select, input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(26, 42, 108, 0.2);
+}
+
+/* Grid de Resultados */
+#resultadoContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+/* Tarjetas de Docentes */
+.card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    border-top: 6px solid var(--primary-color);
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.card h3 {
+    margin: 0 0 15px 0;
+    color: var(--primary-color);
+    font-size: 1.25rem;
+    line-height: 1.2;
+}
+
+.info-item {
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.info-label {
+    font-weight: bold;
+    color: var(--text-muted);
+    min-width: 85px;
+}
+
+.info-value {
+    color: var(--text-main);
+}
+
+/* Caja de Contacto */
+.contact-box {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed #ddd;
+    font-size: 0.85rem;
+}
+
+.contact-box i {
+    margin-right: 5px;
+}
+
+/* Badge de Carrera */
+.badge {
+    position: absolute;
+    top: -15px;
+    right: 15px;
+    background: var(--accent-color);
+    color: #000;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Botón de Asistencia */
+.asistio-btn {
+    width: 100%;
+    background-color: var(--success);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.3s;
+}
+
+.asistio-btn:hover {
+    background-color: #219150;
+}
+
+/* Responsivo para móviles */
+@media (max-width: 600px) {
+    .controls {
+        grid-template-columns: 1fr;
+    }
+    
+    .container {
+        padding: 15px;
+    }
+}
