@@ -10,7 +10,7 @@
     "aula": "LSBA-080",
     "horario": "7:00 - 10:00",
     "asistio": true
-  }
+  },
   {
      "cedula": "9579256",
     "nombre": "LAURENCE MARTINEZ",
@@ -23,7 +23,7 @@
     "horario": "10:00 - 13:00",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "10841561",
@@ -37,7 +37,7 @@
     "horario": "12:15 - 14:30",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "10841561",
@@ -51,7 +51,7 @@
     "horario": "13:45 - 16:00",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "10841561",
@@ -65,7 +65,7 @@
     "horario": "13:45 - 16:00",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "10841561",
@@ -79,7 +79,7 @@
     "horario": "13:45 - 16:00",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "7423563",
@@ -93,7 +93,7 @@
     "horario": "14:30 - 17:30",
     "asistio": true
 
-  }
+  },
 
 
 {
@@ -108,7 +108,7 @@
     "horario": "13:00 - 16:00",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "14624965",
@@ -122,7 +122,7 @@
     "horario": "13:45 - 16:45",
     "asistio": true
 
-  }
+  },
 
 
 {
@@ -137,7 +137,7 @@
     "horario": "07:00 - 10:00",
     "asistio": true
 
-  }
+  },
 
 
 {
@@ -152,7 +152,7 @@
     "horario": "13:45 - 16:45",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "17034748",
@@ -166,7 +166,7 @@
     "horario": "14:30 - 17:30",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "14175652",
@@ -180,7 +180,7 @@
     "horario": "16:30 - 19:00",
     "asistio": true
 
-  }
+  },
 
 
 {
@@ -195,7 +195,7 @@
     "horario": "13:00 - 16:00",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "14998074",
@@ -209,7 +209,7 @@
     "horario": "13:00 - 16:00",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "11792204",
@@ -223,7 +223,7 @@
     "horario": "13:00 - 16:00",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "12111795",
@@ -237,7 +237,7 @@
     "horario": "13:00 - 16:00",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "12111795",
@@ -251,7 +251,7 @@
     "horario": "16:00 - 17:30",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "12111795",
@@ -265,7 +265,7 @@
     "horario": "16:00 - 17:30",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "15307674",
@@ -279,7 +279,7 @@
     "horario": "13:45 - 16:45",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "10845332",
@@ -293,7 +293,7 @@
     "horario": "10:00 - 13:00",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "10845332",
@@ -307,7 +307,7 @@
     "horario": "13:45 - 16:45",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "7469567",
@@ -321,7 +321,7 @@
     "horario": "17:30 - 20:30",
     "asistio": true
 
-  }
+  },
 
 {
    "cedula": "7469567",
@@ -334,7 +334,8 @@
     "aula": "LSBA-042",
     "horario": "17:30 - 20:30",
     "asistio": true
-
+},
+  
   {
 
 
@@ -349,7 +350,7 @@
     "horario": "17:30 - 20:30",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -365,7 +366,7 @@
     "horario": "17:30 - 20:30",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -381,7 +382,7 @@
     "horario": "07:00 - 10:00",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -396,6 +397,8 @@
     "aula": "LSBA-067",
     "horario": "10:00 - 12:15",
     "asistio": true
+  
+  },
 
   {
 
@@ -410,6 +413,7 @@
     "horario": "12:15 - 15:15",
     "asistio": true
 
+  },
 
 
 {
@@ -426,7 +430,7 @@
     "horario": "13:00 - 16:00",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -442,7 +446,7 @@
     "horario": "10:00 - 13:00",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -458,7 +462,7 @@
     "horario": "07:00 - 10:00",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -474,7 +478,7 @@
     "horario": "10:00 - 13:00",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -490,7 +494,7 @@
     "horario": "11:30 - 14:30",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -506,7 +510,7 @@
     "horario": "07:00 - 10:00",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -522,7 +526,7 @@
     "horario": "10:30 - 13:00",
     "asistio": true
 
-  }
+  },
 
 
 {
@@ -539,7 +543,7 @@
     "horario": "14:30 - 17:30",
     "asistio": true
 
-  }
+  },
 
 
 {
@@ -556,7 +560,7 @@
     "horario": "13:00 - 16:00",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -572,7 +576,7 @@
     "horario": "07:00 - 10:00",
     "asistio": true
 
-  }
+  },
 
 
 {
@@ -589,7 +593,7 @@
     "horario": "10:00 - 13:00",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -605,7 +609,7 @@
     "horario": "13:00 - 15:15",
     "asistio": true
 
-  }
+  },
   
 {
 
@@ -621,7 +625,7 @@
     "horario": "7:45 - 10:45",
     "asistio": true
 
-  }
+  },
 
 
 {
@@ -638,7 +642,7 @@
     "horario": "07:00 - 10:00",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -654,7 +658,7 @@
     "horario": "07:00 - 10:00",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -670,7 +674,7 @@
     "horario": "10:00 - 13:00",
     "asistio": true
 
-  }
+  },
 
 
 {
@@ -687,7 +691,7 @@
     "horario": "13:00 - 16:00",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -703,7 +707,7 @@
     "horario": "08:30 - 11:30",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -719,7 +723,7 @@
     "horario": "08:30 - 11:30",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -735,7 +739,7 @@
     "horario": "12:15 - 14:30",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -751,7 +755,7 @@
     "horario": "14:30 - 16:45",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -767,7 +771,7 @@
     "horario": "09:15 - 12:15",
     "asistio": true
 
-  }
+  },
 
 {
 
@@ -783,7 +787,7 @@
     "horario": "07:00 - 10:00",
     "asistio": true
 
-  }
+  },
 
 
 {
