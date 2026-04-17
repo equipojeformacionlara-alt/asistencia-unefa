@@ -606,6 +606,21 @@
     "asistio": true
 
   }
+}
+
+
+   "cedula": "16385113",
+    "nombre": "AURELIX JIMENEZ",
+    "Telf": "04241694575",
+    "Correo": "aurejp09@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-0313-D5",
+    "dia": "JUEVES",
+    "aula": "LSBA-065",
+    "horario": "7:45 - 10:45",
+    "asistio": true
+
+  }
 
 
 }
