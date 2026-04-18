@@ -622,5 +622,45 @@
     "aula": "LSBA-069",
     "horario": "10:00 - 13:00",
     "asistio": true
+  },
+
+  {
+    "cedula": "11295631",
+    "nombre": "EDUARDO ALBERTO CALLES NAVA",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "01S-0313-D7",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-124",
+    "horario": "7:45 - 10:45",
+    "asistio": true
+  },
+
+  {
+    "cedula": "11295631",
+    "nombre": "EDUARDO ALBERTO CALLES NAVA",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-0313-D8",
+    "dia": "MARTES",
+    "aula": "LSBA-116",
+    "horario": "7:00 - 9:15",
+    "asistio": true
+  },
+
+ {
+    "cedula": "11295631",
+    "nombre": "EDUARDO ALBERTO CALLES NAVA",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-0313-D9",
+    "dia": "MARTES",
+    "aula": "LSBA-117",
+    "horario": "10:00 - 12:15",
+    "asistio": true
   }
+  
 ]
