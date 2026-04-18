@@ -661,6 +661,32 @@
     "aula": "LSBA-117",
     "horario": "10:00 - 12:15",
     "asistio": true
+  },
+
+  {
+    "cedula": "4380290",
+    "nombre": "FRANCISCO JOSE ROMERO PACHECO ",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "SISTEMAS",
+    "SECCION": "00S-2613-D1",
+    "dia": "MARTES",
+    "aula": "LSBA-023",
+    "horario": "8:30 - 10:45",
+    "asistio": true
+  },
+
+   {
+    "cedula": "4380290",
+    "nombre": "FRANCISCO JOSE ROMERO PACHECO ",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "SISTEMAS",
+    "SECCION": "00S-2613-D2",
+    "dia": "MARTES",
+    "aula": "LSBA-025",
+    "horario": "10:45 - 13:00",
+    "asistio": true
   }
   
 ]
