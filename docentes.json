@@ -328,13 +328,27 @@
     "nombre": "INDIRA OROPEZA",
     "Telf": "4167583967",
     "Correo": "indiraoropeza.ejercito.unefala@gmail.com",
-    "carrera": "SISTEMAS",
+    "carrera": "ENFERMERIA",
     "SECCION": "00S-0313-D4",
     "dia": "JUEVES",
     "aula": "LSBA-067",
     "horario": "10:00 - 12:15",
     "asistio": true
   },
+
+   {
+    "cedula": "19149570",
+    "nombre": "INDIRA OROPEZA",
+    "Telf": "4167583967",
+    "Correo": "indiraoropeza.ejercito.unefala@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-0313-D6",
+    "dia": "JUEVES",
+    "aula": "LSBA-061",
+    "horario": "7:00 - 10:00",
+    "asistio": true
+  },
+  
   {
     "cedula": "16139489",
     "nombre": "JAVIER COLMENAREZ",
