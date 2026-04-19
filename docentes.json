@@ -701,6 +701,32 @@
     "aula": "LSBA-025",
     "horario": "10:45 - 13:00",
     "asistio": true
+  },
+
+   {
+    "cedula": "11426479",
+    "nombre": "JHONNY GUSTAVO ALVAREZ ",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "SISTEMAS",
+    "SECCION": "01S-2613-D3",
+    "dia": "LUNES",
+    "aula": "LSBA-012",
+    "horario": "14:30 - 17:30",
+    "asistio": true
+  },
+
+   {
+    "cedula": "11426479",
+    "nombre": "JHONNY GUSTAVO ALVAREZ ",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "00S-0913-D1",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-074",
+    "horario": "12:15 - 14:30",
+    "asistio": true
   }
   
 ]
