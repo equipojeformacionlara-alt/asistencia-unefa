@@ -727,6 +727,33 @@
     "aula": "LSBA-074",
     "horario": "12:15 - 14:30",
     "asistio": true
-  }
+  },
+
+{
+    "cedula": "7379584",
+    "nombre": "JOSE GREGORIO FONSECA ",
+    "Telf": "4164527957",
+    "Correo": "Licjoseuft@gmail.com",
+    "carrera": "ADMINISTRACION",
+    "SECCION": "00S-0913-N1",
+    "dia": "LUNES",
+    "aula": "LSBA-050",
+    "horario": "17:30 - 19:45",
+    "asistio": true
+  },
+
+  {
+    "cedula": "7379584",
+    "nombre": "JOSE GREGORIO FONSECA ",
+    "Telf": "4164527957",
+    "Correo": "Licjoseuft@gmail.com",
+    "carrera": "SISTEMAS",
+    "SECCION": "00S-2613-N1",
+    "dia": "MARTES",
+    "aula": "LSBA-049",
+    "horario": "17:30 - 19:45",
+    "asistio": true
+  },
+  
   
 ]
