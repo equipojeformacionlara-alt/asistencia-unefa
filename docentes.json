@@ -754,6 +754,18 @@
     "horario": "17:30 - 19:45",
     "asistio": true
   },
-  
+
+  {
+    "cedula": "12435195",
+    "nombre": "LAURA PASTORA ALVARADO RIVERO",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-0313-N1",
+    "dia": "JUEVES",
+    "aula": "LSBA-064",
+    "horario": "7:30 - 9:15",
+    "asistio": true
+  }
   
 ]
