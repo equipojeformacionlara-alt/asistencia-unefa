@@ -792,6 +792,32 @@
     "aula": "LSBA-064",
     "horario": "10:00 - 12:15",
     "asistio": true
+  },
+
+  {
+    "cedula": "12435196",
+    "nombre": "MARY TRINI ALVARADO RIVERO",
+    "Telf": "04120510433",
+    "Correo": "marytrinialva@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-0313-D3",
+    "dia": "JUEVES",
+    "aula": "LSBA-066",
+    "horario": "7:00 - 9:15",
+    "asistio": true
+  },
+
+   {
+    "cedula": "12435196",
+    "nombre": "MARY TRINI ALVARADO RIVERO",
+    "Telf": "04120510433",
+    "Correo": "marytrinialva@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-0313-D2",
+    "dia": "JUEVES",
+    "aula": "LSBA-064",
+    "horario": "10:00 - 12:15",
+    "asistio": true
   }
   
 ]
