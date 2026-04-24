@@ -764,7 +764,33 @@
     "SECCION": "00S-0313-N1",
     "dia": "JUEVES",
     "aula": "LSBA-064",
-    "horario": "7:30 - 9:15",
+    "horario": "7:00 - 9:15",
+    "asistio": true
+  },
+
+  {
+    "cedula": "19263232",
+    "nombre": "LIBBASSKI JOSE COLMENAREZ FERNANDEZ",
+    "Telf": "04140576785",
+    "Correo": "libbasski@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-0313-D7",
+    "dia": "VIERNES",
+    "aula": "LSBA-066",
+    "horario": "7:00 - 9:15",
+    "asistio": true
+  },
+
+  {
+    "cedula": "19263232",
+    "nombre": "LIBBASSKI JOSE COLMENAREZ FERNANDEZ",
+    "Telf": "04140576785",
+    "Correo": "libbasski@gmail.com",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-0313-D6",
+    "dia": "VIERNES",
+    "aula": "LSBA-064",
+    "horario": "10:00 - 12:15",
     "asistio": true
   }
   
