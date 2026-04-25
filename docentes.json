@@ -818,6 +818,45 @@
     "aula": "LSBA-064",
     "horario": "10:00 - 12:15",
     "asistio": true
+  },
+
+  {
+    "cedula": "23858317",
+    "nombre": "NEIRIBETH BEATRIZ MONTILVA TORRES",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-0313-D11",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-119",
+    "horario": "7:45 - 10:00",
+    "asistio": true
+  },
+
+   {
+    "cedula": "23858317",
+    "nombre": "NEIRIBETH BEATRIZ MONTILVA TORRES",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-0313-D10",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-118",
+    "horario": "10:00 - 12:15",
+    "asistio": true
+  },
+
+   {
+    "cedula": "23858317",
+    "nombre": "NEIRIBETH BEATRIZ MONTILVA TORRES",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "01S-0313-D10",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-003",
+    "horario": "12:15 - 15:15",
+    "asistio": true
   }
   
 ]
