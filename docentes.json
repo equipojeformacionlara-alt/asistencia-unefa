@@ -857,6 +857,45 @@
     "aula": "LSBA-003",
     "horario": "12:15 - 15:15",
     "asistio": true
+  },
+
+  {
+    "cedula": "7369867",
+    "nombre": "RENSO RENNY GONZALEZ MEJIAS",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-2213-D1",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-024",
+    "horario": "7:00 - 9:15",
+    "asistio": true
+  },
+
+  {
+    "cedula": "7369867",
+    "nombre": "RENSO RENNY GONZALEZ MEJIAS",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "00S-2013-D1",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-023",
+    "horario": "9:15 - 11:30",
+    "asistio": true
+  },
+
+  {
+    "cedula": "7369867",
+    "nombre": "RENSO RENNY GONZALEZ MEJIAS",
+    "Telf": "PENDIENTE",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "01S-2613-D5",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-010",
+    "horario": "12:15 - 15:15",
+    "asistio": true
   }
   
 ]
