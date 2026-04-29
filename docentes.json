@@ -896,6 +896,32 @@
     "aula": "LSBA-010",
     "horario": "12:15 - 15:15",
     "asistio": true
+  },
+
+{
+    "cedula": "19180779",
+    "nombre": "JESUS PERAZA",
+    "Telf": "04121584998",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "02S-0313-D1",
+    "dia": "MIERCOLES",
+    "aula": "LSBA-050",
+    "horario": "10:15 - 13:00",
+    "asistio": true
+  },
+
+  {
+    "cedula": "19180779",
+    "nombre": "JESUS PERAZA",
+    "Telf": "04121584998",
+    "Correo": "PENDIENTE",
+    "carrera": "ENFERMERIA",
+    "SECCION": "02S-0313-D4",
+    "dia": "VIERNES",
+    "aula": "LSBA-042",
+    "horario": "13:00 - 16:00",
+    "asistio": true
   }
   
 ]
