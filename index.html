@@ -3,63 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Control Docente - UNEFA</title>
+    <title>Control Docente UNEFA - Lara</title>
     <style>
         :root {
             --primary: #1a2a6c;
-            --accent: #f2a900; /* Color institucional dorado/amarillo */
+            --accent: #f2a900; 
             --bg: #f0f2f5;
             --white: #ffffff;
             --text: #333;
+            --danger: #dc3545;
+            --success: #28a745;
+            --registered: #e9ecef;
         }
 
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); margin: 0; padding: 20px; color: var(--text); }
-        .container { max-width: 1000px; margin: auto; background: var(--white); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 20px; color: var(--text); }
+        .container { max-width: 1200px; margin: auto; background: var(--white); padding: 25px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         
-        h1 { text-align: center; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
+        h1 { text-align: center; color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 0; }
 
-        /* Dashboard Controls */
-        .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; background: #e9ecef; padding: 20px; border-radius: 10px; }
-        label { display: block; font-size: 0.8em; font-weight: bold; margin-bottom: 5px; color: var(--primary); }
-        select, input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
+        label { display: block; font-size: 0.75rem; font-weight: bold; margin-bottom: 5px; color: var(--primary); }
+        select, input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; }
 
-        /* Grid de Resultados */
         #resultadoContainer { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
 
-        .card { background: white; border-top: 5px solid var(--primary); padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; position: relative; }
-        .card:hover { transform: translateY(-5px); }
-        .card h3 { margin: 0 0 10px 0; color: var(--primary); font-size: 1.2em; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .card { background: white; border-top: 5px solid var(--primary); padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.3s; position: relative; }
+        .card.is-registered { background: var(--registered); border-top-color: #adb5bd; opacity: 0.7; }
         
-        .info-item { margin-bottom: 8px; font-size: 0.9em; }
-        .info-label { font-weight: bold; color: #666; width: 80px; display: inline-block; }
-        
-        .contact-box { background: #f8f9fa; padding: 10px; border-radius: 5px; margin-top: 10px; font-size: 0.85em; }
         .tag-carrera { position: absolute; top: 10px; right: 10px; background: var(--accent); color: #000; padding: 2px 8px; border-radius: 4px; font-size: 0.7em; font-weight: bold; }
+        .card h3 { margin: 10px 0; color: var(--primary); font-size: 1rem; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .info-p { margin: 5px 0; font-size: 0.85rem; }
+        .info-p b { color: #555; display: inline-block; width: 70px; }
 
-        .asistio-btn { display: block; width: 100%; padding: 8px; margin-top: 15px; border: none; border-radius: 4px; background: #28a745; color: white; font-weight: bold; cursor: pointer; }
-        
-        .no-results { grid-column: 1 / -1; text-align: center; padding: 40px; color: #999; }
+        .asistio-btn { width: 100%; padding: 10px; margin-top: 15px; border: none; border-radius: 4px; background: var(--success); color: white; font-weight: bold; cursor: pointer; }
+        .asistio-btn.disabled { background: #6c757d; cursor: default; }
+
+        .historial-section { margin-top: 40px; border-top: 2px solid #eee; padding-top: 20px; }
+        .historial-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .historial-item { background: white; padding: 10px; border-radius: 5px; margin-bottom: 10px; border-left: 5px solid var(--success); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Panel de Control Docente</h1>
+    <h1>Panel de Gestión Docente - UNEFA</h1>
 
     <div class="controls">
         <div>
             <label>FILTRAR POR CARRERA</label>
             <select id="filtroCarrera">
-                <option value="">TODAS</option>
-                <option value="ADMINISTRACION">ADMINISTRACIÓN</option>
-                <option value="SISTEMAS">SISTEMAS</option>
+                <option value="">TODAS LAS CARRERAS</option>
                 <option value="ENFERMERIA">ENFERMERÍA</option>
+                <option value="SISTEMAS">SISTEMAS</option>
+                <option value="ADMINISTRACION">ADMINISTRACIÓN</option>
                 <option value="ELECTRICA">ELÉCTRICA</option>
                 <option value="AGRONOMIA">AGRONOMÍA</option>
             </select>
         </div>
         <div>
-            <label>FILTRAR POR DÍA</label>
+            <label>DÍA DE LA SEMANA</label>
             <select id="filtroDia">
                 <option value="">CUALQUIER DÍA</option>
                 <option value="LUNES">LUNES</option>
@@ -71,17 +73,26 @@
             </select>
         </div>
         <div>
-            <label>BUSCAR CÉDULA</label>
-            <input type="text" id="filtroCedula" placeholder="Ej: 9579256">
+            <label>BUSCAR DOCENTE</label>
+            <input type="text" id="filtroBusqueda" placeholder="Nombre o Cédula...">
         </div>
     </div>
 
-    <div id="resultadoContainer">
+    <div id="resultadoContainer"></div>
+
+    <div class="historial-section">
+        <div class="historial-header">
+            <h2 style="font-size: 1.2rem; color: var(--primary);">ASISTENCIAS REGISTRADAS</h2>
+            <button onclick="borrarHistorial()" style="background:var(--danger); color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">Limpiar Todo</button>
         </div>
+        <div id="listaHistorial"></div>
+    </div>
 </div>
 
 <script>
+    // Tu lista completa actualizada con todas las carreras
     const docentes = [
+
         { "cedula": "9579256", "nombre": "LAURENCE MARTINEZ", "Telf": "04127249450", "Correo": "laurencemartinez5@gmail.com", "carrera": "ADMINISTRACION", "SECCION": "03S-0913-D1", "dia": "MARTES", "aula": "LSBA-080", "horario": "7:00 - 10:00", "asistio": true },
         { "cedula": "9579256", "nombre": "LAURENCE MARTINEZ", "Telf": "04127249450", "Correo": "laurencemartinez5@gmail.com", "carrera": "ADMINISTRACION", "SECCION": "03S-0913-D1", "dia": "MARTES", "aula": "LSBA-070", "horario": "10:00 - 13:00", "asistio": true },
         { "cedula": "10841561", "nombre": "JHONNY BLANCO", "Telf": "4161058041", "Correo": "jhonnyblancounefalara@gmail.com", "carrera": "ADMINISTRACION", "SECCION": "00S-0913-N1", "dia": "MARTES", "aula": "LSBA-074", "horario": "12:15 - 14:30", "asistio": true },
@@ -159,63 +170,89 @@
         
     ];
 
-    const cContainer = document.getElementById('resultadoContainer');
-    const fCarrera = document.getElementById('filtroCarrera');
-    const fDia = document.getElementById('filtroDia');
-    const fCedula = document.getElementById('filtroCedula');
+
+    let historial = JSON.parse(localStorage.getItem('asistencias_unefa')) || [];
 
     function filtrar() {
-        const carrera = fCarrera.value;
-        const dia = fDia.value;
-        const cedula = fCedula.value.toLowerCase();
+        const carrera = document.getElementById('filtroCarrera').value;
+        const dia = document.getElementById('filtroDia').value;
+        const texto = document.getElementById('filtroBusqueda').value.toLowerCase();
 
-        const resultados = docentes.filter(d => {
+        const filtrados = docentes.filter(d => {
             return (carrera === "" || d.carrera === carrera) &&
                    (dia === "" || d.dia === dia) &&
-                   (cedula === "" || d.cedula.includes(cedula) || d.nombre.toLowerCase().includes(cedula));
+                   (d.nombre.toLowerCase().includes(texto) || d.cedula.includes(texto));
         });
-
-        renderizar(resultados);
+        render(filtrados);
     }
 
-    function renderizar(lista) {
-        cContainer.innerHTML = "";
-        if(lista.length === 0) {
-            cContainer.innerHTML = `<div class="no-results">No se encontraron docentes con esos filtros.</div>`;
-            return;
-        }
-
+    function render(lista) {
+        const container = document.getElementById('resultadoContainer');
+        container.innerHTML = "";
+        
         lista.forEach(d => {
+            const yaEsta = historial.some(h => h.cedula === d.cedula && h.seccion === d.SECCION);
             const card = document.createElement('div');
-            card.className = 'card';
+            card.className = `card ${yaEsta ? 'is-registered' : ''}`;
             card.innerHTML = `
                 <span class="tag-carrera">${d.carrera}</span>
                 <h3>${d.nombre}</h3>
-                <div class="info-item"><span class="info-label">Cédula:</span> ${d.cedula}</div>
-                <div class="info-item"><span class="info-label">Sección:</span> ${d.SECCION}</div>
-                <div class="info-item"><span class="info-label">Horario:</span> ${d.dia} / ${d.horario}</div>
-                <div class="info-item"><span class="info-label">Aula:</span> ${d.aula}</div>
-                
-                <div class="contact-box">
-                    <strong>Contacto:</strong><br>
-                    📞 ${d.Telf}<br>
-                    ✉️ ${d.Correo}
-                </div>
-                
-                <button class="asistio-btn" onclick="alert('Asistencia marcada para ${d.nombre}')">MARCAR ASISTENCIA</button>
+                <p class="info-p"><b>Cédula:</b> ${d.cedula}</p>
+                <p class="info-p"><b>Sección:</b> ${d.SECCION}</p>
+                <p class="info-p"><b>Horario:</b> ${d.dia} (${d.horario})</p>
+                <p class="info-p"><b>Aula:</b> ${d.aula}</p>
+                <button class="asistio-btn ${yaEsta ? 'disabled' : ''}" 
+                        onclick="${yaEsta ? '' : `marcar('${d.nombre}', '${d.cedula}', '${d.SECCION}')`}">
+                    ${yaEsta ? '✓ REGISTRADO' : 'MARCAR LLEGADA'}
+                </button>
             `;
-            cContainer.appendChild(card);
+            container.appendChild(card);
         });
     }
 
-    // Eventos
-    fCarrera.addEventListener('change', filtrar);
-    fDia.addEventListener('change', filtrar);
-    fCedula.addEventListener('input', filtrar);
+    function marcar(nombre, cedula, seccion) {
+        const h = { id: Date.now(), nombre, cedula, seccion, hora: new Date().toLocaleTimeString() };
+        historial.unshift(h);
+        guardarYRefrescar();
+    }
 
-    // Carga inicial
+    function quitar(id) {
+        historial = historial.filter(h => h.id !== id);
+        guardarYRefrescar();
+    }
+
+    function borrarHistorial() {
+        if(confirm("¿Borrar todos los registros?")) {
+            historial = [];
+            guardarYRefrescar();
+        }
+    }
+
+    function guardarYRefrescar() {
+        localStorage.setItem('asistencias_unefa', JSON.stringify(historial));
+        filtrar();
+        renderHistorial();
+    }
+
+    function renderHistorial() {
+        const lista = document.getElementById('listaHistorial');
+        lista.innerHTML = historial.length === 0 ? "<p style='color:#999'>No hay registros hoy.</p>" : "";
+        historial.forEach(h => {
+            const div = document.createElement('div');
+            div.className = 'historial-item';
+            div.innerHTML = `<div><b>${h.nombre}</b> <small>(${h.seccion})</small><br><span style="font-size:10px">${h.hora}</span></div>
+                             <button onclick="quitar(${h.id})" style="color:var(--danger); border:none; background:none; cursor:pointer">✖</button>`;
+            lista.appendChild(div);
+        });
+    }
+
+    document.getElementById('filtroCarrera').addEventListener('change', filtrar);
+    document.getElementById('filtroDia').addEventListener('change', filtrar);
+    document.getElementById('filtroBusqueda').addEventListener('input', filtrar);
+
     filtrar();
+    renderHistorial();
 </script>
-
 </body>
 </html>
+  
