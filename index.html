@@ -203,7 +203,7 @@
                 <p class="info-p"><b>Aula:</b> ${d.aula}</p>
                 <button class="asistio-btn ${yaEsta ? 'disabled' : ''}" 
                         onclick="${yaEsta ? '' : `marcar('${d.nombre}', '${d.cedula}', '${d.SECCION}')`}">
-                    ${yaEsta ? '✓ REGISTRADO' : 'MARCAR LLEGADA'}
+                    ${yaEsta ? '✓ REALIZADO' : 'ACOMPAÑAMIENTO'}
                 </button>
             `;
             container.appendChild(card);
