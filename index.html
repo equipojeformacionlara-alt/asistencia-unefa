@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control Docente UNEFA - Lara</title>
 
-    <!-- FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
@@ -116,14 +115,15 @@
         }
 
         .info-p {
-            margin: 5px 0;
+            margin: 4px 0;
             font-size: 0.85rem;
+            line-height: 1.4;
         }
 
         .info-p b {
             color: #555;
             display: inline-block;
-            width: 70px;
+            width: 85px; /* Un poco más ancho para Correo */
         }
 
         .asistio-btn {
@@ -172,14 +172,11 @@
 <body>
 
 <div class="container">
-
     <h1>Panel de Gestión Docente - UNEFA</h1>
 
     <div class="controls">
-
         <div>
             <label>FILTRAR POR CARRERA</label>
-
             <select id="filtroCarrera">
                 <option value="">TODAS LAS CARRERAS</option>
                 <option value="ENFERMERIA">ENFERMERÍA</option>
@@ -192,7 +189,6 @@
 
         <div>
             <label>DÍA DE LA SEMANA</label>
-
             <select id="filtroDia">
                 <option value="">CUALQUIER DÍA</option>
                 <option value="LUNES">LUNES</option>
@@ -206,39 +202,25 @@
 
         <div>
             <label>BUSCAR DOCENTE</label>
-
-            <input type="text" id="filtroBusqueda" placeholder="Nombre o Cédula...">
+            <input type="text" id="filtroBusqueda" placeholder="Nombre o Cédula..." oninput="filtrar()">
         </div>
-
     </div>
 
     <div id="resultadoContainer"></div>
 
     <div class="historial-section">
-
         <div class="historial-header">
-            <h2 style="font-size:1.2rem;color:var(--primary);">
-                ASISTENCIAS REGISTRADAS
-            </h2>
-
-            <button onclick="borrarHistorial()"
-                style="background:var(--danger); color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
+            <h2 style="font-size:1.2rem;color:var(--primary);">ASISTENCIAS REGISTRADAS</h2>
+            <button onclick="borrarHistorial()" style="background:var(--danger); color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
                 Limpiar Todo
             </button>
         </div>
-
         <div id="listaHistorial"></div>
-
     </div>
-
 </div>
 
 <script>
-
-    // =========================
-    // FIREBASE
-    // =========================
-
+    // FIREBASE CONFIG
     const firebaseConfig = {
         apiKey: "AIzaSyC7v4oz84ifGjN9YAh2xPOtRiZqDmXDxlg",
         authDomain: "unefa-lara-control.firebaseapp.com",
@@ -250,16 +232,12 @@
     };
 
     firebase.initializeApp(firebaseConfig);
-
     const db = firebase.database();
 
-    // =========================
-    // DOCENTES
-    // =========================
-
+    // LISTADO DE DOCENTES (Usa tus datos proporcionados)
     const docentes = [
-
-       
+        // ... (Aquí van todos tus objetos de docentes con Telf y Correo)
+        
    {
     "cedula": "9579256",
     "nombre": "LAURENCE MARTINEZ",
@@ -1265,244 +1243,114 @@
     "asistio": true
   }
 
-     
-    ];
 
-    // =========================
-    // HISTORIAL
-    // =========================
+
+        // ... (Incluye el resto de los docentes aquí)
+    ];
 
     let historial = [];
 
-    // ESCUCHAR FIREBASE EN TIEMPO REAL
-
+    // ESCUCHAR FIREBASE
     db.ref('asistencias').on('value', (snapshot) => {
-
         const data = snapshot.val();
-
         historial = data ? Object.values(data) : [];
-
         filtrar();
-
         renderHistorial();
-
     });
 
-    // =========================
-    // FILTRAR
-    // =========================
+    document.getElementById('filtroCarrera').addEventListener('change', filtrar);
+    document.getElementById('filtroDia').addEventListener('change', filtrar);
 
     function filtrar() {
-
         const carrera = document.getElementById('filtroCarrera').value;
-
         const dia = document.getElementById('filtroDia').value;
-
-        const texto = document.getElementById('filtroBusqueda')
-            .value
-            .toLowerCase();
+        const texto = document.getElementById('filtroBusqueda').value.toLowerCase();
 
         const filtrados = docentes.filter(d => {
-
-            return (
-                (carrera === "" || d.carrera === carrera) &&
-                (dia === "" || d.dia === dia) &&
-                (
-                    d.nombre.toLowerCase().includes(texto) ||
-                    d.cedula.includes(texto)
-                )
-            );
-
+            return (carrera === "" || d.carrera === carrera) &&
+                   (dia === "" || d.dia === dia) &&
+                   (d.nombre.toLowerCase().includes(texto) || d.cedula.includes(texto));
         });
 
-        render(filtrados);
-
+        renderDocentes(filtrados);
     }
 
-    // =========================
-    // RENDER TARJETAS
-    // =========================
-
-    function render(lista) {
-
+    function renderDocentes(lista) {
         const container = document.getElementById('resultadoContainer');
-
         container.innerHTML = "";
 
         lista.forEach(d => {
-
-            const yaEsta = historial.some(h =>
-                h.cedula === d.cedula &&
-                h.seccion === d.SECCION
-            );
+            // Un ID único por docente y sección para verificar si ya está registrado hoy
+            const idRegistro = `${d.cedula}_${d.SECCION}_${new Date().toLocaleDateString().replace(/\//g,'-')}`;
+            const yaAsistio = historial.some(h => h.registroId === idRegistro);
 
             const card = document.createElement('div');
-
-            card.className = `card ${yaEsta ? 'is-registered' : ''}`;
-
+            card.className = `card ${yaAsistio ? 'is-registered' : ''}`;
             card.innerHTML = `
                 <span class="tag-carrera">${d.carrera}</span>
-
                 <h3>${d.nombre}</h3>
-
-                <p class="info-p">
-                    <b>Cédula:</b> ${d.cedula}
-                </p>
-
-                <p class="info-p">
-                    <b>Sección:</b> ${d.SECCION}
-                </p>
-
-                <p class="info-p">
-                    <b>Horario:</b> ${d.dia} (${d.horario})
-                </p>
-
-                <p class="info-p">
-                    <b>Aula:</b> ${d.aula}
-                </p>
-
-                <button
-                    class="asistio-btn ${yaEsta ? 'disabled' : ''}"
-                    onclick="${yaEsta ? '' : `marcar('${d.nombre}', '${d.cedula}', '${d.SECCION}')`}">
-
-                    ${yaEsta ? '✓ REALIZADO' : 'ACOMPAÑAMIENTO'}
-
+                <p class="info-p"><b>Cédula:</b> ${d.cedula}</p>
+                <p class="info-p"><b>Teléfono:</b> ${d.Telf || 'N/A'}</p>
+                <p class="info-p"><b>Correo:</b> ${d.Correo || 'N/A'}</p>
+                <p class="info-p"><b>Sección:</b> ${d.SECCION}</p>
+                <p class="info-p"><b>Día:</b> ${d.dia}</p>
+                <p class="info-p"><b>Aula:</b> ${d.aula}</p>
+                <button class="asistio-btn ${yaAsistio ? 'disabled' : ''}" 
+                    onclick="${yaAsistio ? '' : `marcarAsistencia('${d.nombre}', '${d.cedula}', '${d.SECCION}', '${d.Telf}', '${d.Correo}')`}">
+                    ${yaAsistio ? 'ACOMPAÑAMIENTO REALIZADO' : 'MARCAR ACOMPAÑAMIENTO'}
                 </button>
             `;
-
             container.appendChild(card);
-
         });
-
     }
 
-    // =========================
-    // MARCAR
-    // =========================
-
-    function marcar(nombre, cedula, seccion) {
-
+    function marcarAsistencia(nombre, cedula, seccion, telf, correo) {
         const id = Date.now();
+        const fecha = new Date().toLocaleDateString();
+        const idRegistro = `${cedula}_${seccion}_${fecha.replace(/\//g,'-')}`;
 
         db.ref('asistencias/' + id).set({
-
             id: id,
-
+            registroId: idRegistro,
             nombre: nombre,
-
             cedula: cedula,
-
             seccion: seccion,
-
+            telefono: telf,
+            correo: correo,
+            fecha: fecha,
             hora: new Date().toLocaleTimeString()
-
         });
-
     }
-
-    // =========================
-    // QUITAR
-    // =========================
-
-    function quitar(id) {
-
-        db.ref('asistencias/' + id).remove();
-
-    }
-
-    // =========================
-    // BORRAR TODO
-    // =========================
-
-    function borrarHistorial() {
-
-        if(confirm("¿Borrar todos los registros?")) {
-
-            db.ref('asistencias').remove();
-
-        }
-
-    }
-
-    // =========================
-    // HISTORIAL
-    // =========================
 
     function renderHistorial() {
-
-        const lista = document.getElementById('listaHistorial');
-
-        lista.innerHTML = historial.length === 0
-            ? "<p style='color:#999'>No hay registros hoy.</p>"
-            : "";
-
-        historial
-            .slice()
-            .reverse()
-            .forEach(h => {
-
-                const div = document.createElement('div');
-
-                div.className = 'historial-item';
-
-                div.innerHTML = `
-
-                    <div>
-                        <b>${h.nombre}</b>
-
-                        <small>(${h.seccion})</small>
-
-                        <br>
-
-                        <span style="font-size:10px">
-                            ${h.hora}
-                        </span>
-                    </div>
-
-                    <button
-                        onclick="quitar(${h.id})"
-                        style="color:var(--danger);
-                        border:none;
-                        background:none;
-                        cursor:pointer">
-
-                        ✖
-
-                    </button>
-
-                `;
-
-                lista.appendChild(div);
-
-            });
-
+        const container = document.getElementById('listaHistorial');
+        container.innerHTML = historial.length === 0 ? '<p>No hay registros hoy.</p>' : '';
+        
+        historial.slice().reverse().forEach(h => {
+            const item = document.createElement('div');
+            item.className = 'historial-item';
+            item.innerHTML = `
+                <div>
+                    <b>${h.nombre}</b> <small>(${h.seccion})</small><br>
+                    <span style="font-size:0.75rem; color:#666;">${h.fecha} - ${h.hora}</span>
+                </div>
+                <button onclick="eliminarRegistro(${h.id})" style="color:red; border:none; background:none; cursor:pointer;">✖</button>
+            `;
+            container.appendChild(item);
+        });
     }
 
-    // =========================
-    // EVENTOS
-    // =========================
+    function eliminarRegistro(id) {
+        if(confirm("¿Eliminar este registro?")) {
+            db.ref('asistencias/' + id).remove();
+        }
+    }
 
-    document
-        .getElementById('filtroCarrera')
-        .addEventListener('change', filtrar);
-
-    document
-        .getElementById('filtroDia')
-        .addEventListener('change', filtrar);
-
-    document
-        .getElementById('filtroBusqueda')
-        .addEventListener('input', filtrar);
-
-    // =========================
-    // INICIO
-    // =========================
-
-    filtrar();
-
-    renderHistorial();
-
+    function borrarHistorial() {
+        if(confirm("¿Desea borrar TODOS los registros del historial?")) {
+            db.ref('asistencias').remove();
+        }
+    }
 </script>
-
 </body>
 </html>
