@@ -1295,6 +1295,9 @@
                 <p class="info-p"><b>Sección:</b> ${d.SECCION}</p>
                 <p class="info-p"><b>Día:</b> ${d.dia}</p>
                 <p class="info-p"><b>Aula:</b> ${d.aula}</p>
+                <p class="info-p"><b>Hora:</b> ${d.horario || 'N/A'}</p>
+
+
                 <button class="asistio-btn ${yaAsistio ? 'disabled' : ''}" 
                     onclick="${yaAsistio ? '' : `marcarAsistencia('${d.nombre}', '${d.cedula}', '${d.SECCION}', '${d.Telf}', '${d.Correo}')`}">
                     ${yaAsistio ? 'ACOMPAÑAMIENTO REALIZADO' : 'MARCAR ACOMPAÑAMIENTO'}
@@ -1304,23 +1307,27 @@
         });
     }
 
-    function marcarAsistencia(nombre, cedula, seccion, telf, correo) {
-        const id = Date.now();
-        const fecha = new Date().toLocaleDateString();
-        const idRegistro = `${cedula}_${seccion}_${fecha.replace(/\//g,'-')}`;
+   
+// Añadimos el parámetro horaClase
+function marcarAsistencia(nombre, cedula, seccion, telf, correo, horaClase) {
+    const id = Date.now();
+    const fecha = new Date().toLocaleDateString();
+    const idRegistro = `${cedula}_${seccion}_${fecha.replace(/\//g,'-')}`;
 
-        db.ref('asistencias/' + id).set({
-            id: id,
-            registroId: idRegistro,
-            nombre: nombre,
-            cedula: cedula,
-            seccion: seccion,
-            telefono: telf,
-            correo: correo,
-            fecha: fecha,
-            hora: new Date().toLocaleTimeString()
-        });
-    }
+    db.ref('asistencias/' + id).set({
+        id: id,
+        registroId: idRegistro,
+        nombre: nombre,
+        cedula: cedula,
+        seccion: seccion,
+        telefono: telf,
+        correo: correo,
+        fecha: fecha,
+        horaClase: horaClase, // Esta es la hora programada (ej: 7:00 - 10:00)
+        horaMarcado: new Date().toLocaleTimeString() // Esta es la hora real del clic
+    });
+}
+
 
     function renderHistorial() {
         const container = document.getElementById('listaHistorial');
