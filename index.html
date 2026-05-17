@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control Docente UNEFA - Lara</title>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <style>
         :root {
@@ -123,7 +123,7 @@
         .info-p b {
             color: #555;
             display: inline-block;
-            width: 85px; /* Un poco más ancho para Correo */
+            width: 85px;
         }
 
         .asistio-btn {
@@ -202,7 +202,7 @@
 
         <div>
             <label>BUSCAR DOCENTE</label>
-            <input type="text" id="filtroBusqueda" placeholder="Nombre o Cédula..." oninput="filtrar()">
+            <input type="text" id="filtroBusqueda" placeholder="Nombre o Cédula...">
         </div>
     </div>
 
@@ -220,1144 +220,163 @@
 </div>
 
 <script>
-    // FIREBASE CONFIG
-    const firebaseConfig = {
-        apiKey: "AIzaSyC7v4oz84ifGjN9YAh2xPOtRiZqDmXDxlg",
-        authDomain: "unefa-lara-control.firebaseapp.com",
-        projectId: "unefa-lara-control",
-        storageBucket: "unefa-lara-control.firebasestorage.app",
-        messagingSenderId: "192489518900",
-        appId: "1:192489518900:web:6b6bef1b206b18a3dc5761",
-        measurementId: "G-MS3CX50S5Z"
-    };
+// CONFIGURACIÓN DE FIREBASE ACTUALIZADA
+const firebaseConfig = {
+    apiKey: "AIzaSyC7v4oz84ifGjN9YAh2xPOtRiZqDmXDxlg",
+    authDomain: "unefa-lara-control.firebaseapp.com",
+    databaseURL: "https://unefa-lara-control-default-rtdb.firebaseio.com",
+    projectId: "unefa-lara-control",
+    storageBucket: "unefa-lara-control.firebasestorage.app",
+    messagingSenderId: "192489518900",
+    appId: "1:192489518900:web:6b6bef1b206b18a3dc5761",
+    measurementId: "G-MS3CX50S5Z"
+};
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+// Inicializar Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-    // LISTADO DE DOCENTES (Usa tus datos proporcionados)
-    const docentes = [
-        // ... (Aquí van todos tus objetos de docentes con Telf y Correo)
-        
-   {
-    "cedula": "9579256",
-    "nombre": "LAURENCE MARTINEZ",
-    "Telf": "04127249450",
-    "Correo": "laurencemartinez5@gmail.com",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "03S-0913-D1",
-    "dia": "MARTES",
-    "aula": "LSBA-080",
-    "horario": "7:00 - 10:00",
-    "asistio": true
-  },
-  {
-    "cedula": "9579256",
-    "nombre": "LAURENCE MARTINEZ",
-    "Telf": "04127249450",
-    "Correo": "laurencemartinez5@gmail.com",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "01S-0913-D1",
-    "dia": "MARTES",
-    "aula": "LSBA-079",
-    "horario": "10:00 - 13:00",
-    "asistio": true
-  },
-  {
-    "cedula": "10841561",
-    "nombre": "JHONNY BLANCO",
-    "Telf": "4161058041",
-    "Correo": "jhonnyblancounefalara@gmail.com",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "00S-0913-N1",
-    "dia": "MARTES",
-    "aula": "LSBA-074",
-    "horario": "12:15 - 14:30",
-    "asistio": true
-  },
-  {
-    "cedula": "7382662",
-    "nombre": "JOSE GREGORIO PARRA",
-    "Telf": "4164508207",
-    "Correo": "josegparrah@gmail.com",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "00S-0913-N1",
-    "dia": "MARTES",
-    "aula": "LSBA-076",
-    "horario": "13:45 - 16:00",
-    "asistio": true
-  },
-  {
-    "cedula": "7382662",
-    "nombre": "JOSE GREGORIO PARRA",
-    "Telf": "4164508207",
-    "Correo": "josegparrah@gmail.com",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "06S-0913-D1",
-    "dia": "JUEVES",
-    "aula": "LSBA-076",
-    "horario": "13:45 - 16:00",
-    "asistio": true
-  },
-  {
-    "cedula": "7382662",
-    "nombre": "JOSE GREGORIO PARRA",
-    "Telf": "4164508207",
-    "Correo": "josegparrah@gmail.com",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "07S-0913-D2",
-    "dia": "JUEVES",
-    "aula": "LSBA-050",
-    "horario": "13:45 - 16:00",
-    "asistio": true
-  },
-  {
-    "cedula": "7423563",
-    "nombre": "PEDRO PABLO LUCENA",
-    "Telf": "4245671921",
-    "Correo": "jserranozerpa@gmail.com",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "07S-0913-D1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-062",
-    "horario": "14:30 - 17:30",
-    "asistio": true
-  },
-  {
-    "cedula": "14624965",
-    "nombre": "WILFREDO CARRASCO",
-    "Telf": "04161047773",
-    "Correo": "wilfredocarrasco2006@hotmail.com",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "05S-0913-D1",
-    "dia": "LUNES",
-    "aula": "LSBA-075",
-    "horario": "13:00 - 16:00",
-    "asistio": true
-  },
-  {
-    "cedula": "14624965",
-    "nombre": "WILFREDO CARRASCO",
-    "Telf": "04161047773",
-    "Correo": "wilfredocarrasco2006@hotmail.com",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "05S-0913-D1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-075",
-    "horario": "13:45 - 16:45",
-    "asistio": true
-  },
-  {
-    "cedula": "11504089",
-    "nombre": "JOSE EDUARDO SANCHEZ",
-    "Telf": "04161047773",
-    "Correo": "franciscolara2474@gmail.com",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "08S-0913-D1",
-    "dia": "MARTES",
-    "aula": "LSBA-044",
-    "horario": "07:00 - 10:00",
-    "asistio": true
-  },
-  {
-    "cedula": "17034748",
-    "nombre": "MANUEL PEROZO",
-    "Telf": "04145419355",
-    "Correo": "adonaismp@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "01S-2613-D1",
-    "dia": "MARTES",
-    "aula": "LSBA-008",
-    "horario": "13:45 - 16:45",
-    "asistio": true
-  },
-  {
-    "cedula": "17034748",
-    "nombre": "MANUEL PEROZO",
-    "Telf": "04145419355",
-    "Correo": "adonaismp@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "01S-2613-D2",
-    "dia": "JUEVES",
-    "aula": "LSBA-008",
-    "horario": "14:30 - 17:30",
-    "asistio": true
-  },
-  {
-    "cedula": "14175652",
-    "nombre": "HENRY LEONARDO PAREDES",
-    "Telf": "04245807715",
-    "Correo": "Leonpar14@Gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "05S-2613-D1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-081",
-    "horario": "16:30 - 19:00",
-    "asistio": true
-  },
-  {
-    "cedula": "14175652",
-    "nombre": "HENRY LEONARDO PAREDES",
-    "Telf": "04245807715",
-    "Correo": "Leonpar14@Gmail.com",
-    "carrera": "ELECTRICA",
-    "SECCION": "05S-2613-D1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-074",
-    "horario": "13:00 - 16:00",
-    "asistio": true
-  },
-  {
-    "cedula": "14998074",
-    "nombre": "JEAMS COROBA",
-    "Telf": "04161291990",
-    "Correo": "Jeamscoroba85@gmail",
-    "carrera": "ELECTRICA",
-    "SECCION": "07S-2013-D1",
-    "dia": "JUEVES",
-    "aula": "LSBA-070",
-    "horario": "13:00 - 16:00",
-    "asistio": true
-  },
-  {
-    "cedula": "11792204",
-    "nombre": "ORLANDO JAVIER",
-    "Telf": "4125041205",
-    "Correo": "Orlandoromerounefalara@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "04S-2613-D2",
-    "dia": "MARTES",
-    "aula": "LSBA-057",
-    "horario": "13:00 - 16:00",
-    "asistio": true
-  },
-  {
-    "cedula": "12111795",
-    "nombre": "PABLO SANCHEZ",
-    "Telf": "04125181482",
-    "Correo": "Pabloescalona1983@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "03S-2613-D2",
-    "dia": "LUNES",
-    "aula": "LSBA-080",
-    "horario": "13:00 - 16:00",
-    "asistio": true
-  },
-  {
-    "cedula": "12111795",
-    "nombre": "PABLO SANCHEZ",
-    "Telf": "04125181482",
-    "Correo": "Pabloescalona1983@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "06S-2613-D1",
-    "dia": "LUNES",
-    "aula": "LSBA-071",
-    "horario": "16:00 - 17:30",
-    "asistio": true
-  },
-  {
-    "cedula": "12111795",
-    "nombre": "PABLO SANCHEZ",
-    "Telf": "04125181482",
-    "Correo": "Pabloescalona1983@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "06S-2613-D1",
-    "dia": "MARTES",
-    "aula": "LSBA-071",
-    "horario": "16:00 - 17:30",
-    "asistio": true
-  },
-  {
-    "cedula": "15307674",
-    "nombre": "JOHANA MILESSA SUAREZ",
-    "Telf": "04129266955",
-    "Correo": "ttesuarezlopez@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "02S-2613-D1",
-    "dia": "MARTES",
-    "aula": "LSBA-009",
-    "horario": "13:45 - 16:45",
-    "asistio": true
-  },
-  {
-    "cedula": "10845332",
-    "nombre": "JAVIER PASTOR RODRIGUEZ",
-    "Telf": "04245137354",
-    "Correo": "rodriguezsalasjavier@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "01S-2613-D7",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-054",
-    "horario": "10:00 - 13:00",
-    "asistio": true
-  },
-  {
-    "cedula": "10845332",
-    "nombre": "JAVIER PASTOR RODRIGUEZ",
-    "Telf": "04245137354",
-    "Correo": "rodriguezsalasjavier@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "03S-2613-D1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-081",
-    "horario": "13:45 - 16:45",
-    "asistio": true
-  },
-  {
-    "cedula": "7469567",
-    "nombre": "ALEXANDER ZERPA",
-    "Telf": "04163557183",
-    "Correo": "alexzerpa1@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "07S-2613-N1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-042",
-    "horario": "17:30 - 20:30",
-    "asistio": true
-  },
-  {
-    "cedula": "7469567",
-    "nombre": "ALEXANDER ZERPA",
-    "Telf": "04163557183",
-    "Correo": "alexzerpa1@gmail.com",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "07S-2613-N1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-042",
-    "horario": "17:30 - 20:30",
-    "asistio": true
-  },
-  {
-    "cedula": "7469567",
-    "nombre": "ALEXANDER ZERPA",
-    "Telf": "04163557183",
-    "Correo": "alexzerpa1@gmail.com",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "08S-0913-N1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-046",
-    "horario": "17:30 - 20:30",
-    "asistio": true
-  },
-  {
-    "cedula": "7469567",
-    "nombre": "ALEXANDER ZERPA",
-    "Telf": "04163557183",
-    "Correo": "alexzerpa1@gmail.com",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "07S-0913-N1",
-    "dia": "VIERNES",
-    "aula": "LSBA-054",
-    "horario": "17:30 - 20:30",
-    "asistio": true
-  },
-  {
-    "cedula": "7469567",
-    "nombre": "ALEXANDER ZERPA",
-    "Telf": "04163557183",
-    "Correo": "alexzerpa1@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "08S-2613-N1",
-    "dia": "SABADO",
-    "aula": "LSBA-044",
-    "horario": "07:00 - 10:00",
-    "asistio": true
-  },
-  {
-    "cedula": "19149570",
-    "nombre": "INDIRA OROPEZA",
-    "Telf": "4167583967",
-    "Correo": "indiraoropeza.ejercito.unefala@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "00S-0313-D4",
-    "dia": "JUEVES",
-    "aula": "LSBA-067",
-    "horario": "10:00 - 12:15",
-    "asistio": true
-  },
+// Arreglos globales sincronizados
+let docentes = [];
+let historial = [];
 
-   {
-    "cedula": "19149570",
-    "nombre": "INDIRA OROPEZA",
-    "Telf": "4167583967",
-    "Correo": "indiraoropeza.ejercito.unefala@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "01S-0313-D6",
-    "dia": "JUEVES",
-    "aula": "LSBA-061",
-    "horario": "7:00 - 10:00",
-    "asistio": true
-  },
-  
-  {
-    "cedula": "16139489",
-    "nombre": "JAVIER COLMENAREZ",
-    "Telf": "04266525983",
-    "Correo": "colmenarezjavierunefalara@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "02S-0313-D5",
-    "dia": "MARTES",
-    "aula": "LSBA-047",
-    "horario": "12:15 - 15:15",
-    "asistio": true
-  },
-  {
-    "cedula": "16139489",
-    "nombre": "JAVIER COLMENAREZ",
-    "Telf": "04266525983",
-    "Correo": "colmenarezjavierunefalara@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "03S-0313-D3",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-057",
-    "horario": "13:00 - 16:00",
-    "asistio": true
-  },
-  {
-    "cedula": "4733943",
-    "nombre": "GLORIA OMAIRA VERA",
-    "Telf": "04121865347",
-    "Correo": "omairaunefalara@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "04S-0313-D2",
-    "dia": "LUNES",
-    "aula": "LSBA-060",
-    "horario": "10:00 - 13:00",
-    "asistio": true
-  },
-  {
-    "cedula": "4733943",
-    "nombre": "GLORIA OMAIRA VERA",
-    "Telf": "04121865347",
-    "Correo": "omairaunefalara@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "04S-0313-D1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-059",
-    "horario": "07:00 - 10:00",
-    "asistio": true
-  },
-  {
-    "cedula": "4733943",
-    "nombre": "GLORIA OMAIRA VERA",
-    "Telf": "04121865347",
-    "Correo": "omairaunefalara@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "03S-0313-D1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-034",
-    "horario": "10:00 - 13:00",
-    "asistio": true
-  },
-  {
-    "cedula": "4733943",
-    "nombre": "GLORIA OMAIRA VERA",
-    "Telf": "04121865347",
-    "Correo": "omairaunefalara@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "03S-0313-D5",
-    "dia": "VIERNES",
-    "aula": "LSBA-035",
-    "horario": "11:30 - 14:30",
-    "asistio": true
-  },
-  {
-    "cedula": "14512135",
-    "nombre": "ALEXIS RODRIGUEZ",
-    "Telf": "04245258521",
-    "Correo": "arnrodrigueznamias@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "04S-0313-D4",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-062",
-    "horario": "07:00 - 10:00",
-    "asistio": true
-  },
-  {
-    "cedula": "14512135",
-    "nombre": "ALEXIS RODRIGUEZ",
-    "Telf": "04245258521",
-    "Correo": "arnrodrigueznamias@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "04S-0313-D3",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-063",
-    "horario": "10:30 - 13:00",
-    "asistio": true
-  },
-  {
-    "cedula": "11790563",
-    "nombre": "ANA DEL CARMEN MARTINEZ",
-    "Telf": "04163535671",
-    "Correo": "anamartinezunefalara@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "01S-0313-D4",
-    "dia": "LUNES",
-    "aula": "LSBA-040",
-    "horario": "14:30 - 17:30",
-    "asistio": true
-  },
-  {
-    "cedula": "11790563",
-    "nombre": "ANA DEL CARMEN MARTINEZ",
-    "Telf": "04163535671",
-    "Correo": "anamartinezunefalara@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "01S-0313-D5",
-    "dia": "MARTES",
-    "aula": "LSBA-053",
-    "horario": "13:00 - 16:00",
-    "asistio": true
-  },
-  {
-    "cedula": "19251421",
-    "nombre": "FRANCISCO LOYO",
-    "Telf": "0424-5359194",
-    "Correo": "PENDIENTE",
-    "carrera": "ENFERMERIA",
-    "SECCION": "03S-0313-D2",
-    "dia": "JUEVES",
-    "aula": "LSBA-056",
-    "horario": "07:00 - 10:00",
-    "asistio": true
-  },
-  {
-    "cedula": "19251421",
-    "nombre": "FRANCISCO LOYO",
-    "Telf": "0424-5359194",
-    "Correo": "PENDIENTE",
-    "carrera": "ENFERMERIA",
-    "SECCION": "03S-0313-D4",
-    "dia": "JUEVES",
-    "aula": "LSBA-052",
-    "horario": "10:00 - 13:00",
-    "asistio": true
-  },
-  {
-    "cedula": "16385113",
-    "nombre": "AURELIX JIMENEZ",
-    "Telf": "04241694575",
-    "Correo": "aurejp09@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "00S-0313-D5",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-065",
-    "horario": "13:00 - 15:15",
-    "asistio": true
-  },
-  {
-    "cedula": "16385113",
-    "nombre": "AURELIX JIMENEZ",
-    "Telf": "04241694575",
-    "Correo": "aurejp09@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "02S-0313-D2",
-    "dia": "JUEVES",
-    "aula": "LSBA-042",
-    "horario": "7:45 - 10:45",
-    "asistio": true
-  },
-  {
-    "cedula": "15960332",
-    "nombre": "YENI SARMIENTO",
-    "Telf": "04166014401",
-    "Correo": "yenisarmiento27@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "02S-0313-D3",
-    "dia": "MARTES",
-    "aula": "LSBA-043",
-    "horario": "07:00 - 10:00",
-    "asistio": true
-  },
-  {
-    "cedula": "15960332",
-    "nombre": "YENI SARMIENTO",
-    "Telf": "04166014401",
-    "Correo": "yenisarmiento27@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "01S-0313-D1",
-    "dia": "JUEVES",
-    "aula": "LSBA-044",
-    "horario": "07:00 - 10:00",
-    "asistio": true
-  },
-  {
-    "cedula": "15960332",
-    "nombre": "YENI SARMIENTO",
-    "Telf": "04166014401",
-    "Correo": "yenisarmiento27@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "01S-0313-D2",
-    "dia": "JUEVES",
-    "aula": "LSBA-045",
-    "horario": "10:00 - 13:00",
-    "asistio": true
-  },
-  {
-    "cedula": "15960332",
-    "nombre": "YENI SARMIENTO",
-    "Telf": "04166014401",
-    "Correo": "yenisarmiento27@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "01S-0313-D3",
-    "dia": "JUEVES",
-    "aula": "LSBA-047",
-    "horario": "13:00 - 16:00",
-    "asistio": true
-  },
-  {
-    "cedula": "9714176",
-    "nombre": "JESUS ALBERTO LUZARDO",
-    "Telf": "PENDIENTE",
-    "Correo": "PENDIENTE",
-    "carrera": "ENFERMERIA",
-    "SECCION": "01S-0313-D8",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-001",
-    "horario": "08:30 - 11:30",
-    "asistio": true
-  },
-  {
-    "cedula": "9714176",
-    "nombre": "JESUS ALBERTO LUZARDO",
-    "Telf": "PENDIENTE",
-    "Correo": "PENDIENTE",
-    "carrera": "ENFERMERIA",
-    "SECCION": "00S-0313-D12",
-    "dia": "JUEVES",
-    "aula": "LSBA-120",
-    "horario": "12:15 - 14:30",
-    "asistio": true
-  },
-  {
-    "cedula": "9714176",
-    "nombre": "JESUS ALBERTO LUZARDO",
-    "Telf": "PENDIENTE",
-    "Correo": "PENDIENTE",
-    "carrera": "ENFERMERIA",
-    "SECCION": "00S-0313-D12",
-    "dia": "JUEVES",
-    "aula": "LSBA-121",
-    "horario": "14:30 - 16:45",
-    "asistio": true
-  },
-  {
-    "cedula": "5723613",
-    "nombre": "JESUS BERMUDEZ",
-    "Telf": "04149237330",
-    "Correo": "jesusbermudezhernandez@gmail.com",
-    "carrera": "ELECTRICA",
-    "SECCION": "08S-2213-D1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-036",
-    "horario": "09:15 - 12:15",
-    "asistio": true
-  },
-  {
-    "cedula": "7323090",
-    "nombre": "JOSE MANUEL TORRES",
-    "Telf": "04120836327",
-    "Correo": "abg.josemtorresr@gmail.com",
-    "carrera": "AGRONOMIA",
-    "SECCION": "03S-2213-D1",
-    "dia": "JUEVES",
-    "aula": "LSBA-077",
-    "horario": "07:00 - 10:00",
-    "asistio": true
-  },
-  {
-    "cedula": "7323090",
-    "nombre": "JOSE MANUEL TORRES",
-    "Telf": "04120836327",
-    "Correo": "abg.josemtorresr@gmail.com",
-    "carrera": "AGRONOMIA",
-    "SECCION": "01S-2013-D1",
-    "dia": "JUEVES",
-    "aula": "LSBA-069",
-    "horario": "10:00 - 13:00",
-    "asistio": true
-  },
+// ========================================================
+// 1. ESCUCHAR LA RAMA DE DOCENTES EN TIEMPO REAL
+// ========================================================
+db.ref('docentes').on('value', (snapshot) => {
+    const data = snapshot.val();
+    docentes = []; 
+    
+    if (data) {
+        Object.keys(data).forEach(key => {
+            if (data[key]) {
+                docentes.push({ idFirebase: key, ...data[key] });
+            }
+        });
+    }
+    filtrar(); 
+});
 
-  {
-    "cedula": "11295631",
-    "nombre": "EDUARDO ALBERTO CALLES NAVA",
-    "Telf": "PENDIENTE",
-    "Correo": "PENDIENTE",
-    "carrera": "ENFERMERIA",
-    "SECCION": "01S-0313-D7",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-124",
-    "horario": "7:45 - 10:45",
-    "asistio": true
-  },
+// ========================================================
+// 2. ESCUCHAR LA RAMA DE ASISTENCIAS EN TIEMPO REAL
+// ========================================================
+db.ref('asistencias_unefa').on('value', (snapshot) => {
+    const data = snapshot.val();
+    historial = []; 
+    
+    if (data) {
+        Object.keys(data).forEach(key => {
+            historial.push({ idFirebase: key, ...data[key] });
+        });
+        historial.sort((a, b) => b.id - a.id);
+    }
+    filtrar();
+    renderHistorial();
+});
 
-  {
-    "cedula": "11295631",
-    "nombre": "EDUARDO ALBERTO CALLES NAVA",
-    "Telf": "PENDIENTE",
-    "Correo": "PENDIENTE",
-    "carrera": "ENFERMERIA",
-    "SECCION": "00S-0313-D8",
-    "dia": "MARTES",
-    "aula": "LSBA-116",
-    "horario": "7:00 - 9:15",
-    "asistio": true
-  },
+// ========================================================
+// 3. FUNCIONES DE FILTRADO Y RENDERIZADO
+// ========================================================
+function filtrar() {
+    const carrera = document.getElementById('filtroCarrera').value.toUpperCase();
+    const dia = document.getElementById('filtroDia').value.toUpperCase();
+    const texto = document.getElementById('filtroBusqueda').value.toLowerCase();
 
- {
-    "cedula": "11295631",
-    "nombre": "EDUARDO ALBERTO CALLES NAVA",
-    "Telf": "PENDIENTE",
-    "Correo": "PENDIENTE",
-    "carrera": "ENFERMERIA",
-    "SECCION": "00S-0313-D9",
-    "dia": "MARTES",
-    "aula": "LSBA-117",
-    "horario": "10:00 - 12:15",
-    "asistio": true
-  },
+    const filtrados = docentes.filter(d => {
+        const carreraDocente = (d.carrera || "").toUpperCase();
+        const diaDocente = (d.dia || d.DIA || "").toUpperCase();
+        const nombreDocente = (d.nombre || "").toLowerCase();
+        const cedulaDocente = (d.cedula || "").toString();
 
-  {
-    "cedula": "4380290",
-    "nombre": "FRANCISCO JOSE ROMERO PACHECO ",
-    "Telf": "04127621980",
-    "Correo": "PENDIENTE",
-    "carrera": "SISTEMAS",
-    "SECCION": "00S-2613-D1",
-    "dia": "MARTES",
-    "aula": "LSBA-023",
-    "horario": "8:30 - 10:45",
-    "asistio": true
-  },
-
-   {
-    "cedula": "4380290",
-    "nombre": "FRANCISCO JOSE ROMERO PACHECO ",
-    "Telf": "04127621980",
-    "Correo": "PENDIENTE",
-    "carrera": "SISTEMAS",
-    "SECCION": "00S-2613-D2",
-    "dia": "MARTES",
-    "aula": "LSBA-025",
-    "horario": "10:45 - 13:00",
-    "asistio": true
-  },
-
-   {
-    "cedula": "11426479",
-    "nombre": "JHONNY GUSTAVO ALVAREZ ",
-    "Telf": "04125270000",
-    "Correo": "PENDIENTE",
-    "carrera": "SISTEMAS",
-    "SECCION": "01S-2613-D3",
-    "dia": "LUNES",
-    "aula": "LSBA-012",
-    "horario": "14:30 - 17:30",
-    "asistio": true
-  },
-
-   {
-    "cedula": "11426479",
-    "nombre": "JHONNY GUSTAVO ALVAREZ ",
-    "Telf": "04125270000",
-    "Correo": "PENDIENTE",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "00S-0913-D1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-074",
-    "horario": "12:15 - 14:30",
-    "asistio": true
-  },
-
-{
-    "cedula": "7379584",
-    "nombre": "JOSE GREGORIO FONSECA ",
-    "Telf": "4164527957",
-    "Correo": "Licjoseuft@gmail.com",
-    "carrera": "ADMINISTRACION",
-    "SECCION": "00S-0913-N1",
-    "dia": "LUNES",
-    "aula": "LSBA-050",
-    "horario": "17:30 - 19:45",
-    "asistio": true
-  },
-
-  {
-    "cedula": "7379584",
-    "nombre": "JOSE GREGORIO FONSECA ",
-    "Telf": "4164527957",
-    "Correo": "Licjoseuft@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "00S-2613-N1",
-    "dia": "MARTES",
-    "aula": "LSBA-049",
-    "horario": "17:30 - 19:45",
-    "asistio": true
-  },
-
-  {
-    "cedula": "12435195",
-    "nombre": "LAURA PASTORA ALVARADO RIVERO",
-    "Telf": "PENDIENTE",
-    "Correo": "PENDIENTE",
-    "carrera": "ENFERMERIA",
-    "SECCION": "00S-0313-N1",
-    "dia": "JUEVES",
-    "aula": "LSBA-064",
-    "horario": "7:00 - 9:15",
-    "asistio": true
-  },
-
-  {
-    "cedula": "19263232",
-    "nombre": "LIBBASSKI JOSE COLMENAREZ FERNANDEZ",
-    "Telf": "04140576785",
-    "Correo": "libbasski@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "00S-0313-D7",
-    "dia": "VIERNES",
-    "aula": "LSBA-066",
-    "horario": "7:00 - 9:15",
-    "asistio": true
-  },
-
-  {
-    "cedula": "19263232",
-    "nombre": "LIBBASSKI JOSE COLMENAREZ FERNANDEZ",
-    "Telf": "04140576785",
-    "Correo": "libbasski@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "00S-0313-D6",
-    "dia": "VIERNES",
-    "aula": "LSBA-064",
-    "horario": "10:00 - 12:15",
-    "asistio": true
-  },
-
-  {
-    "cedula": "12435196",
-    "nombre": "MARY TRINI ALVARADO RIVERO",
-    "Telf": "04120510433",
-    "Correo": "marytrinialva@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "00S-0313-D3",
-    "dia": "JUEVES",
-    "aula": "LSBA-066",
-    "horario": "7:00 - 9:15",
-    "asistio": true
-  },
-
-   {
-    "cedula": "12435196",
-    "nombre": "MARY TRINI ALVARADO RIVERO",
-    "Telf": "04120510433",
-    "Correo": "marytrinialva@gmail.com",
-    "carrera": "ENFERMERIA",
-    "SECCION": "00S-0313-D2",
-    "dia": "JUEVES",
-    "aula": "LSBA-064",
-    "horario": "10:00 - 12:15",
-    "asistio": true
-  },
-
-  {
-    "cedula": "23858317",
-    "nombre": "NEIRIBETH BEATRIZ MONTILVA TORRES",
-    "Telf": "PENDIENTE",
-    "Correo": "PENDIENTE",
-    "carrera": "ENFERMERIA",
-    "SECCION": "00S-0313-D11",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-119",
-    "horario": "7:45 - 10:00",
-    "asistio": true
-  },
-
-   {
-    "cedula": "23858317",
-    "nombre": "NEIRIBETH BEATRIZ MONTILVA TORRES",
-    "Telf": "PENDIENTE",
-    "Correo": "PENDIENTE",
-    "carrera": "ENFERMERIA",
-    "SECCION": "00S-0313-D10",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-118",
-    "horario": "10:00 - 12:15",
-    "asistio": true
-  },
-
-   {
-    "cedula": "23858317",
-    "nombre": "NEIRIBETH BEATRIZ MONTILVA TORRES",
-    "Telf": "PENDIENTE",
-    "Correo": "PENDIENTE",
-    "carrera": "ENFERMERIA",
-    "SECCION": "01S-0313-D10",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-003",
-    "horario": "12:15 - 15:15",
-    "asistio": true
-  },
-
-  {
-    "cedula": "7369867",
-    "nombre": "RENSO RENNY GONZALEZ MEJIAS",
-    "Telf": "04145208630",
-    "Correo": "PENDIENTE",
-    "carrera": "ELECTRICA",
-    "SECCION": "00S-2213-D1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-024",
-    "horario": "7:00 - 9:15",
-    "asistio": true
-  },
-
-  {
-    "cedula": "7369867",
-    "nombre": "RENSO RENNY GONZALEZ MEJIAS",
-    "Telf": "04145208630",
-    "Correo": "PENDIENTE",
-    "carrera": "AGRONOMIA",
-    "SECCION": "00S-2013-D1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-023",
-    "horario": "9:15 - 11:30",
-    "asistio": true
-  },
-
-  {
-    "cedula": "7369867",
-    "nombre": "RENSO RENNY GONZALEZ MEJIAS",
-    "Telf": "04145208630",
-    "Correo": "PENDIENTE",
-    "carrera": "SISTEMAS",
-    "SECCION": "01S-2613-D5",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-010",
-    "horario": "12:15 - 15:15",
-    "asistio": true
-  },
-
-{
-    "cedula": "19180779",
-    "nombre": "JESUS PERAZA",
-    "Telf": "04121584998",
-    "Correo": "PENDIENTE",
-    "carrera": "ENFERMERIA",
-    "SECCION": "02S-0313-D1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-050",
-    "horario": "10:15 - 13:00",
-    "asistio": true
-  },
-
-  {
-    "cedula": "19180779",
-    "nombre": "JESUS PERAZA",
-    "Telf": "04121584998",
-    "Correo": "PENDIENTE",
-    "carrera": "ENFERMERIA",
-    "SECCION": "02S-0313-D4",
-    "dia": "VIERNES",
-    "aula": "LSBA-042",
-    "horario": "13:00 - 16:00",
-    "asistio": true
-  },
-
-{
-    "cedula": "15885469",
-    "nombre": "DOSKY JESUS ROJAS FABRIANI",
-    "Telf": "4165285526",
-    "Correo": "Doskyrojasj@gmail.com",
-    "carrera": "AGRONOMIA",
-    "SECCION": "03S-2013-D1",
-    "dia": "MIERCOLES",
-    "aula": "LSBA-064",
-    "horario": "13:00 - 16:00",
-    "asistio": true
-  },
-
-{
-    "cedula": "15885469",
-    "nombre": "DOSKY JESUS ROJAS FABRIANI",
-    "Telf": "04165285526",
-    "Correo": "Doskyrojasj@gmail.com",
-    "carrera": "AGRONOMIA",
-    "SECCION": "05S-2013-D1",
-    "dia": "JUEVES",
-    "aula": "LSBA-069",
-    "horario": "14:30 - 17:30",
-    "asistio": true
-  },
-
-   {
-    "cedula": "11599843",
-    "nombre": "LEIDA JOSEFINA ROJAS MORENO",
-    "Telf": "04266547864",
-    "Correo": "duranyrojas@gmail.com",
-    "carrera": "ELECTRICA",
-    "SECCION": "01S-2213-D1",
-    "dia": "MARTES",
-    "aula": "LSBA-072",
-    "horario": "10:00 - 13:00",
-    "asistio": true
-  },
-
-{
-    "cedula": "11599843",
-    "nombre": "LEIDA JOSEFINA ROJAS MORENO",
-    "Telf": "04266547864",
-    "Correo": "duranyrojas@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "01S-2613-D6",
-    "dia": "VIERNES",
-    "aula": "LSBA-012",
-    "horario": "7:00 - 10:00",
-    "asistio": true
-  },
-
-
-
-{
-    "cedula": "11599843",
-    "nombre": "LEIDA JOSEFINA ROJAS MORENO",
-    "Telf": "04266547864",
-    "Correo": "duranyrojas@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "01S-2613-D4",
-    "dia": "VIERNES",
-    "aula": "LSBA-011",
-    "horario": "10:00 - 13:00",
-    "asistio": true
-  },
-
-{
-    "cedula": "11599843",
-    "nombre": "LEIDA JOSEFINA ROJAS MORENO",
-    "Telf": "04266547864",
-    "Correo": "duranyrojas@gmail.com",
-    "carrera": "SISTEMAS",
-    "SECCION": "04S-2613-D1",
-    "dia": "VIERNES",
-    "aula": "LSBA-071",
-    "horario": "13:00 - 16:00",
-    "asistio": true
-  }
-
-
-
-        // ... (Incluye el resto de los docentes aquí)
-    ];
-
-    let historial = [];
-
-    // ESCUCHAR FIREBASE
-    db.ref('asistencias').on('value', (snapshot) => {
-        const data = snapshot.val();
-        historial = data ? Object.values(data) : [];
-        filtrar();
-        renderHistorial();
+        return (carrera === "" || carreraDocente === carrera) &&
+               (dia === "" || diaDocente === dia) &&
+               (nombreDocente.includes(texto) || cedulaDocente.includes(texto));
     });
+    render(filtrados);
+}
 
-    document.getElementById('filtroCarrera').addEventListener('change', filtrar);
-    document.getElementById('filtroDia').addEventListener('change', filtrar);
-
-    function filtrar() {
-        const carrera = document.getElementById('filtroCarrera').value;
-        const dia = document.getElementById('filtroDia').value;
-        const texto = document.getElementById('filtroBusqueda').value.toLowerCase();
-
-        const filtrados = docentes.filter(d => {
-            return (carrera === "" || d.carrera === carrera) &&
-                   (dia === "" || d.dia === dia) &&
-                   (d.nombre.toLowerCase().includes(texto) || d.cedula.includes(texto));
-        });
-
-        renderDocentes(filtrados);
+function render(lista) {
+    const container = document.getElementById('resultadoContainer');
+    container.innerHTML = "";
+    
+    if (lista.length === 0) {
+        container.innerHTML = "<p style='grid-column:1/-1; color:#666;'>No se encontraron docentes...</p>";
+        return;
     }
 
-    function renderDocentes(lista) {
-        const container = document.getElementById('resultadoContainer');
-        container.innerHTML = "";
-
-        lista.forEach(d => {
-            // Un ID único por docente y sección para verificar si ya está registrado hoy
-            const idRegistro = `${d.cedula}_${d.SECCION}_${new Date().toLocaleDateString().replace(/\//g,'-')}`;
-            const yaAsistio = historial.some(h => h.registroId === idRegistro);
-
-            const card = document.createElement('div');
-            card.className = `card ${yaAsistio ? 'is-registered' : ''}`;
-            card.innerHTML = `
-                <span class="tag-carrera">${d.carrera}</span>
-                <h3>${d.nombre}</h3>
-                <p class="info-p"><b>Cédula:</b> ${d.cedula}</p>
-                <p class="info-p"><b>Teléfono:</b> ${d.Telf || 'N/A'}</p>
-                <p class="info-p"><b>Correo:</b> ${d.Correo || 'N/A'}</p>
-                <p class="info-p"><b>Sección:</b> ${d.SECCION}</p>
-                <p class="info-p"><b>Día:</b> ${d.dia}</p>
-                <p class="info-p"><b>Aula:</b> ${d.aula}</p>
-                <p class="info-p"><b>Hora:</b> ${d.horario || 'N/A'}</p>
-
-
-                <button class="asistio-btn ${yaAsistio ? 'disabled' : ''}" 
-                    onclick="${yaAsistio ? '' : `marcarAsistencia('${d.nombre}', '${d.cedula}', '${d.SECCION}', '${d.Telf}', '${d.Correo}')`}">
-                    ${yaAsistio ? 'ACOMPAÑAMIENTO REALIZADO' : 'MARCAR ACOMPAÑAMIENTO'}
-                </button>
-            `;
-            container.appendChild(card);
-        });
-    }
-
-   
-// Añadimos el parámetro horaClase
-function marcarAsistencia(nombre, cedula, seccion, telf, correo, horaClase) {
-    const id = Date.now();
-    const fecha = new Date().toLocaleDateString();
-    const idRegistro = `${cedula}_${seccion}_${fecha.replace(/\//g,'-')}`;
-
-    db.ref('asistencias/' + id).set({
-        id: id,
-        registroId: idRegistro,
-        nombre: nombre,
-        cedula: cedula,
-        seccion: seccion,
-        telefono: telf,
-        correo: correo,
-        fecha: fecha,
-        horaClase: horaClase, // Esta es la hora programada (ej: 7:00 - 10:00)
-        horaMarcado: new Date().toLocaleTimeString() // Esta es la hora real del clic
+    lista.forEach(d => {
+        const yaEsta = historial.some(h => h.cedula === d.cedula && h.seccion === d.SECCION);
+        const card = document.createElement('div');
+        card.className = `card ${yaEsta ? 'is-registered' : ''}`;
+        
+        card.innerHTML = `
+            <span class="tag-carrera">${d.carrera || 'N/A'}</span>
+            <h3>${d.nombre || 'SIN NOMBRE'}</h3>
+            <p class="info-p"><b>Cédula:</b> ${d.cedula || '---'}</p>
+            <p class="info-p"><b>Sección:</b> ${d.SECCION || '---'}</p>
+            <p class="info-p"><b>Horario:</b> ${d.dia || ''} (${d.horario || '---'})</p>
+            <p class="info-p"><b>Aula:</b> ${d.aula || '---'}</p>
+            <button class="asistio-btn ${yaEsta ? 'disabled' : ''}" 
+                onclick="${yaEsta ? '' : `marcar('${d.nombre || ""}', '${d.cedula || ""}', '${d.SECCION || ""}')`}">
+                ${yaEsta ? '✓ REALIZADO' : 'ACOMPAÑAMIENTO'} 
+            </button>
+        `;
+        container.appendChild(card);
     });
 }
 
+// ========================================================
+// 4. OPERACIONES DE ESCRITURA EN LA NUBE
+// ========================================================
+function marcar(nombre, cedula, seccion) {
+    const h = { 
+        id: Date.now(), 
+        nombre, 
+        cedula, 
+        seccion, 
+        hora: new Date().toLocaleTimeString() 
+    };
+    db.ref('asistencias_unefa').push(h);
+}
 
-    function renderHistorial() {
-        const container = document.getElementById('listaHistorial');
-        container.innerHTML = historial.length === 0 ? '<p>No hay registros hoy.</p>' : '';
+function quitar(idFirebase) {
+    if(confirm("¿Desea remover este registro de acompañamiento de la nube?")) {
+        db.ref(`asistencias_unefa/${idFirebase}`).remove();
+    }
+}
+
+function borrarHistorial() {
+    if(confirm("¿Borrar todos los registros de la base de datos en Firebase?")) {
+        db.ref('asistencias_unefa').remove();
+    }
+}
+
+function renderHistorial() {
+    const lista = document.getElementById('listaHistorial');
+    lista.innerHTML = historial.length === 0 ? "<p style='color:#999'>No hay registros hoy.</p>" : "";
+    
+    historial.forEach(h => {
+        const div = document.createElement('div');
+        div.className = 'historial-item';
         
-        historial.slice().reverse().forEach(h => {
-            const item = document.createElement('div');
-            item.className = 'historial-item';
-            item.innerHTML = `
-                <div>
-                    <b>${h.nombre}</b> <small>(${h.seccion})</small><br>
-                    <span style="font-size:0.75rem; color:#666;">${h.fecha} - ${h.hora}</span>
-                </div>
-                <button onclick="eliminarRegistro(${h.id})" style="color:red; border:none; background:none; cursor:pointer;">✖</button>
-            `;
-            container.appendChild(item);
-        });
-    }
+        div.innerHTML = `
+            <div>
+                <b>${h.nombre}</b> <small>(${h.seccion})</small><br>
+                <span style="font-size:10px">${h.hora}</span>
+            </div>
+            <button onclick="quitar('${h.idFirebase}')" style="color:var(--danger); border:none; background:none; cursor:pointer">✖</button>
+        `;
+        lista.appendChild(div);
+    });
+}
 
-    function eliminarRegistro(id) {
-        if(confirm("¿Eliminar este registro?")) {
-            db.ref('asistencias/' + id).remove();
-        }
-    }
+// Asignación de eventos limpia
+document.getElementById('filtroCarrera').addEventListener('change', filtrar);
+document.getElementById('filtroDia').addEventListener('change', filtrar);
+document.getElementById('filtroBusqueda').addEventListener('input', filtrar);
 
-    function borrarHistorial() {
-        if(confirm("¿Desea borrar TODOS los registros del historial?")) {
-            db.ref('asistencias').remove();
-        }
-    }
+// Inicializar ejecución al cargar
+filtrar();
 </script>
 </body>
 </html>
