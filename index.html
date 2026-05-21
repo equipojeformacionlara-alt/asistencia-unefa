@@ -284,6 +284,7 @@ function filtrar() {
 
     const filtrados = docentes.filter(d => {
         const carreraDocente = (d.carrera || "").toUpperCase();
+        // Sincronización del día corregida aquí
         const diaDocente = (d.dia || d.DIA || "").toUpperCase();
         const nombreDocente = (d.nombre || "").toLowerCase();
         const cedulaDocente = (d.cedula || "").toString();
@@ -314,7 +315,7 @@ function render(lista) {
             <h3>${d.nombre || 'SIN NOMBRE'}</h3>
             <p class="info-p"><b>Cédula:</b> ${d.cedula || '---'}</p>
             <p class="info-p"><b>Sección:</b> ${d.SECCION || '---'}</p>
-            <p class="info-p"><b>Horario:</b> ${d.dia || ''} (${d.horario || '---'})</p>
+            <p class="info-p"><b>Horario:</b> ${d.dia || d.DIA || ''} (${d.horario || '---'})</p>
             <p class="info-p"><b>Aula:</b> ${d.aula || '---'}</p>
             <p class="info-p"><b>Teléfono:</b> ${d.telefono || '---'}</p>
             <p class="info-p"><b>Correo:</b> ${d.correo || '---'}</p>
@@ -341,12 +342,14 @@ function marcar(nombre, cedula, seccion) {
     db.ref('asistencias_unefa').push(h);
 }
 
+// Remoción individual de asistencias
 function quitar(idFirebase) {
     if(confirm("¿Desea remover este registro de acompañamiento de la nube?")) {
         db.ref(`asistencias_unefa/${idFirebase}`).remove();
     }
 }
 
+// Limpieza total del historial
 function borrarHistorial() {
     if(confirm("¿Borrar todos los registros de la base de datos en Firebase?")) {
         db.ref('asistencias_unefa').remove();
