@@ -316,6 +316,8 @@ function render(lista) {
             <p class="info-p"><b>Sección:</b> ${d.SECCION || '---'}</p>
             <p class="info-p"><b>Horario:</b> ${d.dia || ''} (${d.horario || '---'})</p>
             <p class="info-p"><b>Aula:</b> ${d.aula || '---'}</p>
+            <p class="info-p"><b>Teléfono:</b> ${d.telefono || '---'}</p>
+            <p class="info-p"><b>Correo:</b> ${d.correo || '---'}</p>
             <button class="asistio-btn ${yaEsta ? 'disabled' : ''}" 
                 onclick="${yaEsta ? '' : `marcar('${d.nombre || ""}', '${d.cedula || ""}', '${d.SECCION || ""}')`}">
                 ${yaEsta ? '✓ REALIZADO' : 'ACOMPAÑAMIENTO'} 
