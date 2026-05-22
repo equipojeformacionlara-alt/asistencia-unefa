@@ -8,6 +8,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
     <style>
         :root {
@@ -19,6 +20,8 @@
             --danger: #dc3545;
             --success: #28a745;
             --registered: #e9ecef;
+            --warning: #ffc107;
+            --excel-btn: #107c41;
         }
 
         body {
@@ -49,13 +52,21 @@
         .counter-banner {
             background: var(--primary);
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 8px;
             margin-bottom: 15px;
             font-weight: bold;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .counter-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
         .dashboard-btn {
@@ -114,9 +125,9 @@
         }
 
         .card.is-registered {
-            background: var(--registered);
-            border-top-color: #adb5bd;
-            opacity: 0.7;
+            background: var(--registered) !important;
+            border-top-color: #adb5bd !important;
+            opacity: 0.75;
         }
 
         .tag-carrera {
@@ -137,6 +148,7 @@
             font-size: 1rem;
             border-bottom: 1px solid #eee;
             padding-bottom: 5px;
+            padding-right: 80px;
         }
 
         .info-p {
@@ -151,10 +163,15 @@
             width: 85px;
         }
 
-        .asistio-btn {
-            width: 100%;
-            padding: 10px;
+        .action-group {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 8px;
             margin-top: 15px;
+        }
+
+        .asistio-btn {
+            padding: 10px;
             border: none;
             border-radius: 4px;
             background: var(--success);
@@ -163,12 +180,23 @@
             cursor: pointer;
         }
 
-        .asistio-btn.disabled {
-            background: #6c757d;
-            cursor: default;
+        .justificar-btn {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background: var(--warning);
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
         }
 
-        /* MODAL DEL DASHBOARD */
+        .asistio-btn.disabled, .justificar-btn.disabled {
+            background: #6c757d;
+            color: white;
+            cursor: default;
+            pointer-events: none;
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -184,7 +212,7 @@
             padding: 25px;
             border-radius: 12px;
             width: 90%;
-            max-width: 600px;
+            max-width: 650px;
             max-height: 85vh;
             overflow-y: auto;
             position: relative;
@@ -206,6 +234,26 @@
             border-left: 4px solid var(--primary);
         }
 
+        .btn-modal-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .excel-btn {
+            background: var(--excel-btn);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
         .historial-section {
             margin-top: 40px;
             border-top: 2px solid #eee;
@@ -224,12 +272,14 @@
             padding: 10px;
             border-radius: 5px;
             margin-bottom: 10px;
-            border-left: 5px solid var(--success);
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
+
+        .historial-item.status-asistio { border-left: 5px solid var(--success); }
+        .historial-item.status-justificado { border-left: 5px solid var(--warning); }
     </style>
 </head>
 <body>
@@ -238,7 +288,10 @@
     <h1>Panel de Gestión Docente - UNEFA</h1>
 
     <div class="counter-banner">
-        <span id="contadorDocentes">Docentes filtrados: 0 / Total: 0</span>
+        <div class="counter-info">
+            <span id="contadorRegistros">Bloques académicos filtrados: 0 / Total general: 0</span>
+            <span id="contadorDocentesUnicos" style="font-size: 0.9rem; color: var(--accent);">👤 Docentes reales en este filtro: 0 (Personas únicas)</span>
+        </div>
         <button class="dashboard-btn" onclick="abrirDashboard()">📊 Ver Dashboard</button>
     </div>
 
@@ -278,7 +331,7 @@
 
     <div class="historial-section">
         <div class="historial-header">
-            <h2 style="font-size:1.2rem;color:var(--primary);">ASISTENCIAS REGISTRADAS</h2>
+            <h2 style="font-size:1.2rem;color:var(--primary);">ACOMPAÑAMIENTOS Y NOVEDADES DEL DÍA</h2>
             <button onclick="borrarHistorial()" style="background:var(--danger); color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
                 Limpiar Todo
             </button>
@@ -292,16 +345,20 @@
         <span class="close-modal" onclick="cerrarDashboard()">&times;</span>
         <h2 style="color:var(--primary); margin-top:0;">📊 Dashboard de Acompañamiento</h2>
         
+        <div class="btn-modal-group">
+            <button class="excel-btn" onclick="exportarExcelDiaActual()"><svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="display:inline;vertical-align:middle;"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2zM4.5 1h4.086L13 5.414V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/><path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8zm0 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/></svg> 📥 Exportar Reporte a Excel</button>
+        </div>
+
         <div class="report-box" id="reporteTexto"></div>
         
-        <div style="width: 100%; max-width: 400px; margin: auto;">
+        <div style="width: 100%; max-width: 380px; margin: auto;">
             <canvas id="graficaAsistencia"></canvas>
         </div>
     </div>
 </div>
 
 <script>
-// CONFIGURACIÓN DE FIREBASE ACTUALIZADA
+// CONFIGURACIÓN DE FIREBASE
 const firebaseConfig = {
     apiKey: "AIzaSyC7v4oz84ifGjN9YAh2xPOtRiZqDmXDxlg",
     authDomain: "unefa-lara-control.firebaseapp.com",
@@ -319,8 +376,9 @@ const db = firebase.database();
 let docentes = [];
 let historial = [];
 let miGrafica = null;
+let diaGlobalAnalisis = ""; 
 
-// 1. ESCUCHAR DOCENTES
+// 1. ESCUCHAR DATA DE FIREBASE
 db.ref('docentes').on('value', (snapshot) => {
     const data = snapshot.val();
     docentes = []; 
@@ -334,7 +392,6 @@ db.ref('docentes').on('value', (snapshot) => {
     filtrar(); 
 });
 
-// 2. ESCUCHAR ASISTENCIAS
 db.ref('asistencias_unefa').on('value', (snapshot) => {
     const data = snapshot.val();
     historial = []; 
@@ -348,7 +405,7 @@ db.ref('asistencias_unefa').on('value', (snapshot) => {
     renderHistorial();
 });
 
-// 3. FILTRADO CON BÚSQUEDA POR ASIGNATURA
+// 2. FILTRADO
 function filtrar() {
     const carrera = document.getElementById('filtroCarrera').value.toUpperCase();
     const dia = document.getElementById('filtroDia').value.toUpperCase();
@@ -359,7 +416,6 @@ function filtrar() {
         const diaDocente = (d.dia || d.DIA || "").toUpperCase();
         const nombreDocente = (d.nombre || "").toLowerCase();
         const cedulaDocente = (d.cedula || "").toString();
-        // Nueva propiedad de Asignatura agregada al filtro
         const asignaturaDocente = (d.asignatura || "").toLowerCase();
 
         return (carrera === "" || carreraDocente === carrera) &&
@@ -367,89 +423,128 @@ function filtrar() {
                (nombreDocente.includes(texto) || cedulaDocente.includes(texto) || asignaturaDocente.includes(texto));
     });
 
-    // Actualizar el contador del banner superior
-    document.getElementById('contadorDocentes').innerText = `Docentes filtrados: ${filtrados.length} / Total General: ${docentes.length}`;
+    const cedulasUnicas = new Set();
+    filtrados.forEach(d => {
+        if(d.cedula) cedulasUnicas.add(d.cedula.toString().trim());
+    });
+
+    document.getElementById('contadorRegistros').innerText = `Bloques académicos filtrados: ${filtrados.length} / Total general: ${docentes.length}`;
+    document.getElementById('contadorDocentesUnicos').innerText = `👤 Docentes reales en este filtro: ${cedulasUnicas.size} (Personas únicas)`;
     
     render(filtrados);
 }
 
-// RENDERIZADO DE TARJETAS
+// 3. DESPLIEGUE DE TARJETAS
 function render(lista) {
     const container = document.getElementById('resultadoContainer');
     container.innerHTML = "";
     
     if (lista.length === 0) {
-        container.innerHTML = "<p style='grid-column:1/-1; color:#666;'>No se encontraron docentes...</p>";
+        container.innerHTML = "<p style='grid-column:1/-1; color:#666;'>No se encontraron asignaciones...</p>";
         return;
     }
 
     lista.forEach(d => {
-        const yaEsta = historial.some(h => h.cedula === d.cedula && h.seccion === d.SECCION);
-        const card = document.createElement('div');
-        card.className = `card ${yaEsta ? 'is-registered' : ''}`;
+        const seccionDocente = (d.SECCION || d.seccion || "").toString().trim().toUpperCase();
+        const cedulaDocente = (d.cedula || "").toString().trim();
+
+        const registroHoy = historial.find(h => {
+            const hCedula = (h.cedula || "").toString().trim();
+            const hSeccion = (h.seccion || "").toString().trim().toUpperCase();
+            return hCedula === cedulaDocente && hSeccion === seccionDocente;
+        });
+
+        const yaEsta = !!registroHoy;
+        const tipoEstado = yaEsta ? registroHoy.estado : "";
+        const cardClass = `card ${yaEsta ? 'is-registered' : ''}`;
         
+        const card = document.createElement('div');
+        card.className = cardClass;
+        
+        let botoneraHtml = "";
+        if (!yaEsta) {
+            botoneraHtml = `
+                <div class="action-group">
+                    <button class="asistio-btn" onclick="registrarEstado('${d.nombre}', '${cedulaDocente}', '${seccionDocente}', 'ASISTIO')">ACOMPAÑAMIENTO</button>
+                    <button class="justificar-btn" onclick="registrarEstado('${d.nombre}', '${cedulaDocente}', '${seccionDocente}', 'JUSTIFICADO')">JUSTIFICAR</button>
+                </div>
+            `;
+        } else {
+            const textoBoton = tipoEstado === 'JUSTIFICADO' ? '✓ JUSTIFICADO' : '✓ REALIZADO';
+            botoneraHtml = `
+                <div class="action-group" style="grid-template-columns: 1fr;">
+                    <button class="asistio-btn disabled">${textoBoton}</button>
+                </div>
+            `;
+        }
+
         card.innerHTML = `
             <span class="tag-carrera">${d.carrera || 'N/A'}</span>
             <h3>${d.nombre || 'SIN NOMBRE'}</h3>
-            <p class="info-p"><b>Cédula:</b> ${d.cedula || '---'}</p>
+            <p class="info-p"><b>Cédula:</b> ${cedulaDocente || '---'}</p>
             <p class="info-p"><b>Asignatura:</b> ${d.asignatura || '---'}</p>
-            <p class="info-p"><b>Sección:</b> ${d.SECCION || '---'}</p>
+            <p class="info-p"><b>Sección:</b> ${seccionDocente || '---'}</p>
             <p class="info-p"><b>Horario:</b> ${d.dia || d.DIA || ''} (${d.horario || '---'})</p>
             <p class="info-p"><b>Aula:</b> ${d.aula || '---'}</p>
             <p class="info-p"><b>Teléfono:</b> ${d.telefono || '---'}</p>
             <p class="info-p"><b>Correo:</b> ${d.correo || '---'}</p>
-            <button class="asistio-btn ${yaEsta ? 'disabled' : ''}" 
-                onclick="${yaEsta ? '' : `marcar('${d.nombre || ""}', '${d.cedula || ""}', '${d.SECCION || ""}')`}">
-                ${yaEsta ? '✓ REALIZADO' : 'ACOMPAÑAMIENTO'} 
-            </button>
+            ${botoneraHtml}
         `;
         container.appendChild(card);
     });
 }
 
-// DASHBOARD: LÓGICA DE GRÁFICO Y REPORTE TEXTUAL
+// 4. PROCESAMIENTO Y APERTURA DE DASHBOARD
 function abrirDashboard() {
     document.getElementById('dashboardModal').style.display = 'flex';
     
-    // Obtener día seleccionado o usar el actual si está en "cualquier día"
     const diasSemana = ["DOMINGO", "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO"];
     const filtroDiaValue = document.getElementById('filtroDia').value;
-    const diaAnalisis = filtroDiaValue ? filtroDiaValue : diasSemana[new Date().getDay()];
+    diaGlobalAnalisis = filtroDiaValue ? filtroDiaValue : diasSemana[new Date().getDay()];
 
-    // Calcular docentes programados para ese día específico
-    const programados = docentes.filter(d => (d.dia || d.DIA || "").toUpperCase() === diaAnalisis).length;
+    const bloquesDelDia = docentes.filter(d => (d.dia || d.DIA || "").toUpperCase() === diaGlobalAnalisis);
+    const programados = bloquesDelDia.length;
     
-    // Contar cuántos de esos programados asistieron (cruzar con historial)
-    const asistieron = docentes.filter(d => {
-        const esDelDia = (d.dia || d.DIA || "").toUpperCase() === diaAnalisis;
-        const registroAsistencia = historial.some(h => h.cedula === d.cedula && h.seccion === d.SECCION);
-        return esDelDia && registroAsistencia;
-    }).length;
+    let asistentes = 0;
+    let justificados = 0;
 
-    const justificados = 0; // Campo base ampliable si añades un módulo de reposos
-    const faltantes = programados - asistieron;
+    bloquesDelDia.forEach(d => {
+        const seccionDocente = (d.SECCION || d.seccion || "").toString().trim().toUpperCase();
+        const cedulaDocente = (d.cedula || "").toString().trim();
+
+        const reg = historial.find(h => {
+            const hCedula = (h.cedula || "").toString().trim();
+            const hSeccion = (h.seccion || "").toString().trim().toUpperCase();
+            return hCedula === cedulaDocente && hSeccion === seccionDocente;
+        });
+
+        if (reg) {
+            if (reg.estado === "ASISTIO") {
+                asistentes++;
+            } else if (reg.estado === "JUSTIFICADO") {
+                justificados++;
+            }
+        }
+    });
+
+    const faltantes = programados - (asistentes + justificados);
+    const totalProcesados = asistentes + justificados;
+    const porcentaje = programados > 0 ? Math.round((totalProcesados / programados) * 100) : 0;
     
-    // Calcular porcentaje de barra
-    const porcentaje = programados > 0 ? Math.round((asistieron / programados) * 100) : 0;
     const barrasTotal = 30;
     const barrasLlenas = Math.round((porcentaje / 100) * barrasTotal);
     const barraTexto = "█".repeat(barrasLlenas) + "░".repeat(barrasTotal - barrasLlenas);
 
-    // Formatear el reporte de texto solicitado
-    const opcionesFecha = { weekday: 'long', day: 'numeric', month: 'long' };
-    const fechaFormateada = new Date().toLocaleDateString('es-ES', opcionesFecha);
-
     document.getElementById('reporteTexto').innerText = 
-`Se informa que en el marco del bloque académico (${diaAnalisis.toLowerCase()}), se reportó el acompañamiento de ${asistieron} docentes de un total de ${programados} programados para impartir clases.
+`Se informa que en el marco del bloque académico (${diaGlobalAnalisis.toLowerCase()}), se reportó el acompañamiento de ${asistentes} docentes de un total de ${programados} programados para impartir clases.
 
 Docentes Programados: ${programados}
-Docentes Asistentes: ${asistieron}
+Docentes Asistentes: ${asistentes}
 Justificados: ${justificados}
 
-Total = ${asistieron}/${programados}
+Total = ${totalProcesados}/${programados}
 Progreso de asistencia docente: [${barraTexto}] ${porcentaje}%`;
 
-    // Renderizar gráfico con Chart.js
     const ctx = document.getElementById('graficaAsistencia').getContext('2d');
     if (miGrafica) { miGrafica.destroy(); }
 
@@ -458,8 +553,8 @@ Progreso de asistencia docente: [${barraTexto}] ${porcentaje}%`;
         data: {
             labels: ['Asistieron', 'Pendientes', 'Justificados'],
             datasets: [{
-                data: [asistieron, faltantes < 0 ? 0 : faltantes, justificados],
-                backgroundColor: ['#28a745', '#dc3545', '#f2a900']
+                data: [asistentes, faltantes < 0 ? 0 : faltantes, justificados],
+                backgroundColor: ['#28a745', '#dc3545', '#ffc107']
             }]
         },
         options: {
@@ -475,10 +570,127 @@ function cerrarDashboard() {
     document.getElementById('dashboardModal').style.display = 'none';
 }
 
-// OPERACIONES DE NUBE
-function marcar(nombre, cedula, seccion) {
-    const h = { id: Date.now(), nombre, cedula, seccion, hora: new Date().toLocaleTimeString() };
-    db.ref('asistencias_unefa').push(h);
+// ==========================================
+// NUEVA FUNCIÓN: EXPORTAR A EXCEL PROFESIONAL
+// ==========================================
+function exportarExcelDiaActual() {
+    if (!diaGlobalAnalisis) {
+        alert("No se ha definido el día bajo análisis.");
+        return;
+    }
+
+    // Filtramos los bloques que pertenecen al día abierto en el Dashboard
+    const bloquesDelDia = docentes.filter(d => (d.dia || d.DIA || "").toUpperCase() === diaGlobalAnalisis);
+
+    if (bloquesDelDia.length === 0) {
+        alert(`No hay registros de clases programadas para el día ${diaGlobalAnalisis}.`);
+        return;
+    }
+
+    // Estructuramos el contenido fila por fila
+    const matrizDatos = [];
+
+    // Fila 1 a 3: Título institucional
+    matrizDatos.push(["UNIVERSIDAD NACIONAL EXPERIMENTAL DE LA FUERZA ARMADA (UNEFA)"]);
+    matrizDatos.push([`REPORTE DE ACOMPAÑAMIENTO DOCENTE - BLOQUE: ${diaGlobalAnalisis}`]);
+    matrizDatos.push([`Fecha de generación: ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`]);
+    matrizDatos.push([]); // Línea en blanco separadora
+
+    // Encabezados de la Tabla
+    matrizDatos.push(["N°", "CÉDULA", "DOCENTE", "CARRERA", "ASIGNATURA", "SECCIÓN", "AULA", "HORARIO", "ESTADO ASISTENCIA", "HORA REGISTRO"]);
+
+    // Variables de conteo estadístico para el cierre de la hoja
+    let totalAsistio = 0;
+    let totalJustificado = 0;
+    let totalPendiente = 0;
+
+    // Recorremos los docentes programados para cruzar sus estados
+    bloquesDelDia.forEach((d, index) => {
+        const seccionDocente = (d.SECCION || d.seccion || "").toString().trim().toUpperCase();
+        const cedulaDocente = (d.cedula || "").toString().trim();
+
+        // Cruzamos con el historial guardado en Firebase
+        const reg = historial.find(h => {
+            const hCedula = (h.cedula || "").toString().trim();
+            const hSeccion = (h.seccion || "").toString().trim().toUpperCase();
+            return hCedula === cedulaDocente && hSeccion === seccionDocente;
+        });
+
+        let estadoTexto = "PENDIENTE";
+        let horaTexto = "---";
+
+        if (reg) {
+            if (reg.estado === "ASISTIO") {
+                estadoTexto = "ASISTIÓ";
+                totalAsistio++;
+            } else if (reg.estado === "JUSTIFICADO") {
+                estadoTexto = "JUSTIFICADO";
+                totalJustificado++;
+            }
+            horaTexto = reg.hora || "---";
+        } else {
+            totalPendiente++;
+        }
+
+        // Insertamos la fila del profesor
+        matrizDatos.push([
+            index + 1,
+            cedulaDocente,
+            d.nombre || "---",
+            d.carrera || "---",
+            d.asignatura || "---",
+            seccionDocente,
+            d.aula || "---",
+            d.horario || "---",
+            estadoTexto,
+            horaTexto
+        ]);
+    });
+
+    // Añadimos cuadro de resumen al final del documento
+    matrizDatos.push([]);
+    matrizDatos.push(["", "", "", "", "", "", "", "TOTAL ASISTIERON:", totalAsistio]);
+    matrizDatos.push(["", "", "", "", "", "", "", "TOTAL JUSTIFICADOS:", totalJustificado]);
+    matrizDatos.push(["", "", "", "", "", "", "", "TOTAL PENDIENTES:", totalPendiente]);
+    matrizDatos.push(["", "", "", "", "", "", "", "TOTAL PROGRAMADOS:", bloquesDelDia.length]);
+
+    // Crear el libro de trabajo (Workbook) de Excel usando la librería
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(matrizDatos);
+
+    // Ajuste dinámico de ancho de columnas para evitar que el texto salga cortado al imprimir (###)
+    const anchoColumnas = [
+        { wch: 5 },  // N°
+        { wch: 14 }, // Cédula
+        { wch: 35 }, // Docente
+        { wch: 16 }, // Carrera
+        { wch: 30 }, // Asignatura
+        { wch: 15 }, // Sección
+        { wch: 10 }, // Aula
+        { wch: 15 }, // Horario
+        { wch: 18 }, // Estado
+        { wch: 15 }  // Hora Registro
+    ];
+    ws['!cols'] = anchoColumnas;
+
+    // Vincular la hoja al libro y descargar con nombre personalizado de la UNEFA
+    XLSX.utils.book_append_sheet(wb, ws, `Asistencia ${diaGlobalAnalisis}`);
+    
+    const nombreArchivo = `Reporte_Acompanamiento_UNEFA_${diaGlobalAnalisis.toLowerCase()}_${new Date().toISOString().slice(0,10)}.xlsx`;
+    XLSX.writeFile(wb, nombreArchivo);
+}
+
+// 5. OPERACIONES DE ESCRITURA
+function registrarEstado(nombre, cedula, seccion, estado) {
+    const registro = { 
+        id: Date.now(), 
+        nombre: nombre, 
+        cedula: cedula.toString().trim(), 
+        seccion: seccion.toString().trim().toUpperCase(), 
+        estado: estado, 
+        hora: new Date().toLocaleTimeString() 
+    };
+    db.ref('asistencias_unefa').push(registro);
 }
 
 function quitar(idFirebase) {
@@ -486,18 +698,28 @@ function quitar(idFirebase) {
 }
 
 function borrarHistorial() {
-    if(confirm("¿Borrar todos los registros?")) { db.ref('asistencias_unefa').remove(); }
+    if(confirm("¿Borrar todos los registros de hoy?")) { db.ref('asistencias_unefa').remove(); }
 }
 
 function renderHistorial() {
     const lista = document.getElementById('listaHistorial');
     lista.innerHTML = historial.length === 0 ? "<p style='color:#999'>No hay registros hoy.</p>" : "";
+    
     historial.forEach(h => {
         const div = document.createElement('div');
-        div.className = 'historial-item';
+        const badgeColor = h.estado === 'JUSTIFICADO' ? 'var(--warning)' : 'var(--success)';
+        const badgeTexto = h.estado === 'JUSTIFICADO' ? 'JUSTIFICADO' : 'ASISTIÓ';
+        
+        div.className = `historial-item ${h.estado === 'JUSTIFICADO' ? 'status-justificado' : 'status-asistio'}`;
         div.innerHTML = `
-            <div><b>${h.nombre}</b> <small>(${h.seccion})</small><br><span style="font-size:10px">${h.hora}</span></div>
-            <button onclick="quitar('${h.idFirebase}')" style="color:var(--danger); border:none; background:none; cursor:pointer">✖</button>
+            <div>
+                <b>${h.nombre}</b> <small>(${h.seccion})</small> 
+                <span style="background:${badgeColor}; font-size:10px; padding:2px 6px; border-radius:3px; margin-left:5px; font-weight:bold; color:#000;">
+                    ${badgeTexto}
+                </span>
+                <br><span style="font-size:10px; color:#777;">${h.hora}</span>
+            </div>
+            <button onclick="quitar('${h.idFirebase}')" style="color:var(--danger); border:none; background:none; cursor:pointer; font-size:1.1rem;">✖</button>
         `;
         lista.appendChild(div);
     });
