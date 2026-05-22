@@ -7,6 +7,7 @@
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {
@@ -45,6 +46,29 @@
             margin-top: 0;
         }
 
+        .counter-banner {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-btn {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
         .controls {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -70,6 +94,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 14px;
+            box-sizing: border-box;
         }
 
         #resultadoContainer {
@@ -143,6 +168,44 @@
             cursor: default;
         }
 
+        /* MODAL DEL DASHBOARD */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 1.5rem; cursor: pointer; color: #666;
+        }
+
+        .report-box {
+            background: #f1f3f5;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+        }
+
         .historial-section {
             margin-top: 40px;
             border-top: 2px solid #eee;
@@ -174,6 +237,11 @@
 <div class="container">
     <h1>Panel de Gestión Docente - UNEFA</h1>
 
+    <div class="counter-banner">
+        <span id="contadorDocentes">Docentes filtrados: 0 / Total: 0</span>
+        <button class="dashboard-btn" onclick="abrirDashboard()">📊 Ver Dashboard</button>
+    </div>
+
     <div class="controls">
         <div>
             <label>FILTRAR POR CARRERA</label>
@@ -201,8 +269,8 @@
         </div>
 
         <div>
-            <label>BUSCAR DOCENTE</label>
-            <input type="text" id="filtroBusqueda" placeholder="Nombre o Cédula...">
+            <label>BUSCAR DOCENTE O ASIGNATURA</label>
+            <input type="text" id="filtroBusqueda" placeholder="Nombre, Cédula o Asignatura...">
         </div>
     </div>
 
@@ -219,6 +287,19 @@
     </div>
 </div>
 
+<div id="dashboardModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="cerrarDashboard()">&times;</span>
+        <h2 style="color:var(--primary); margin-top:0;">📊 Dashboard de Acompañamiento</h2>
+        
+        <div class="report-box" id="reporteTexto"></div>
+        
+        <div style="width: 100%; max-width: 400px; margin: auto;">
+            <canvas id="graficaAsistencia"></canvas>
+        </div>
+    </div>
+</div>
+
 <script>
 // CONFIGURACIÓN DE FIREBASE ACTUALIZADA
 const firebaseConfig = {
@@ -232,21 +313,17 @@ const firebaseConfig = {
     measurementId: "G-MS3CX50S5Z"
 };
 
-// Inicializar Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// Arreglos globales sincronizados
 let docentes = [];
 let historial = [];
+let miGrafica = null;
 
-// ========================================================
-// 1. ESCUCHAR LA RAMA DE DOCENTES EN TIEMPO REAL
-// ========================================================
+// 1. ESCUCHAR DOCENTES
 db.ref('docentes').on('value', (snapshot) => {
     const data = snapshot.val();
     docentes = []; 
-    
     if (data) {
         Object.keys(data).forEach(key => {
             if (data[key]) {
@@ -257,13 +334,10 @@ db.ref('docentes').on('value', (snapshot) => {
     filtrar(); 
 });
 
-// ========================================================
-// 2. ESCUCHAR LA RAMA DE ASISTENCIAS EN TIEMPO REAL
-// ========================================================
+// 2. ESCUCHAR ASISTENCIAS
 db.ref('asistencias_unefa').on('value', (snapshot) => {
     const data = snapshot.val();
     historial = []; 
-    
     if (data) {
         Object.keys(data).forEach(key => {
             historial.push({ idFirebase: key, ...data[key] });
@@ -274,9 +348,7 @@ db.ref('asistencias_unefa').on('value', (snapshot) => {
     renderHistorial();
 });
 
-// ========================================================
-// 3. FUNCIONES DE FILTRADO Y RENDERIZADO
-// ========================================================
+// 3. FILTRADO CON BÚSQUEDA POR ASIGNATURA
 function filtrar() {
     const carrera = document.getElementById('filtroCarrera').value.toUpperCase();
     const dia = document.getElementById('filtroDia').value.toUpperCase();
@@ -284,18 +356,24 @@ function filtrar() {
 
     const filtrados = docentes.filter(d => {
         const carreraDocente = (d.carrera || "").toUpperCase();
-        // Sincronización del día corregida aquí
         const diaDocente = (d.dia || d.DIA || "").toUpperCase();
         const nombreDocente = (d.nombre || "").toLowerCase();
         const cedulaDocente = (d.cedula || "").toString();
+        // Nueva propiedad de Asignatura agregada al filtro
+        const asignaturaDocente = (d.asignatura || "").toLowerCase();
 
         return (carrera === "" || carreraDocente === carrera) &&
                (dia === "" || diaDocente === dia) &&
-               (nombreDocente.includes(texto) || cedulaDocente.includes(texto));
+               (nombreDocente.includes(texto) || cedulaDocente.includes(texto) || asignaturaDocente.includes(texto));
     });
+
+    // Actualizar el contador del banner superior
+    document.getElementById('contadorDocentes').innerText = `Docentes filtrados: ${filtrados.length} / Total General: ${docentes.length}`;
+    
     render(filtrados);
 }
 
+// RENDERIZADO DE TARJETAS
 function render(lista) {
     const container = document.getElementById('resultadoContainer');
     container.innerHTML = "";
@@ -314,6 +392,7 @@ function render(lista) {
             <span class="tag-carrera">${d.carrera || 'N/A'}</span>
             <h3>${d.nombre || 'SIN NOMBRE'}</h3>
             <p class="info-p"><b>Cédula:</b> ${d.cedula || '---'}</p>
+            <p class="info-p"><b>Asignatura:</b> ${d.asignatura || '---'}</p>
             <p class="info-p"><b>Sección:</b> ${d.SECCION || '---'}</p>
             <p class="info-p"><b>Horario:</b> ${d.dia || d.DIA || ''} (${d.horario || '---'})</p>
             <p class="info-p"><b>Aula:</b> ${d.aula || '---'}</p>
@@ -328,59 +407,106 @@ function render(lista) {
     });
 }
 
-// ========================================================
-// 4. OPERACIONES DE ESCRITURA EN LA NUBE
-// ========================================================
+// DASHBOARD: LÓGICA DE GRÁFICO Y REPORTE TEXTUAL
+function abrirDashboard() {
+    document.getElementById('dashboardModal').style.display = 'flex';
+    
+    // Obtener día seleccionado o usar el actual si está en "cualquier día"
+    const diasSemana = ["DOMINGO", "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO"];
+    const filtroDiaValue = document.getElementById('filtroDia').value;
+    const diaAnalisis = filtroDiaValue ? filtroDiaValue : diasSemana[new Date().getDay()];
+
+    // Calcular docentes programados para ese día específico
+    const programados = docentes.filter(d => (d.dia || d.DIA || "").toUpperCase() === diaAnalisis).length;
+    
+    // Contar cuántos de esos programados asistieron (cruzar con historial)
+    const asistieron = docentes.filter(d => {
+        const esDelDia = (d.dia || d.DIA || "").toUpperCase() === diaAnalisis;
+        const registroAsistencia = historial.some(h => h.cedula === d.cedula && h.seccion === d.SECCION);
+        return esDelDia && registroAsistencia;
+    }).length;
+
+    const justificados = 0; // Campo base ampliable si añades un módulo de reposos
+    const faltantes = programados - asistieron;
+    
+    // Calcular porcentaje de barra
+    const porcentaje = programados > 0 ? Math.round((asistieron / programados) * 100) : 0;
+    const barrasTotal = 30;
+    const barrasLlenas = Math.round((porcentaje / 100) * barrasTotal);
+    const barraTexto = "█".repeat(barrasLlenas) + "░".repeat(barrasTotal - barrasLlenas);
+
+    // Formatear el reporte de texto solicitado
+    const opcionesFecha = { weekday: 'long', day: 'numeric', month: 'long' };
+    const fechaFormateada = new Date().toLocaleDateString('es-ES', opcionesFecha);
+
+    document.getElementById('reporteTexto').innerText = 
+`Se informa que en el marco del bloque académico (${diaAnalisis.toLowerCase()}), se reportó el acompañamiento de ${asistieron} docentes de un total de ${programados} programados para impartir clases.
+
+Docentes Programados: ${programados}
+Docentes Asistentes: ${asistieron}
+Justificados: ${justificados}
+
+Total = ${asistieron}/${programados}
+Progreso de asistencia docente: [${barraTexto}] ${porcentaje}%`;
+
+    // Renderizar gráfico con Chart.js
+    const ctx = document.getElementById('graficaAsistencia').getContext('2d');
+    if (miGrafica) { miGrafica.destroy(); }
+
+    miGrafica = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Asistieron', 'Pendientes', 'Justificados'],
+            datasets: [{
+                data: [asistieron, faltantes < 0 ? 0 : faltantes, justificados],
+                backgroundColor: ['#28a745', '#dc3545', '#f2a900']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+}
+
+function cerrarDashboard() {
+    document.getElementById('dashboardModal').style.display = 'none';
+}
+
+// OPERACIONES DE NUBE
 function marcar(nombre, cedula, seccion) {
-    const h = { 
-        id: Date.now(), 
-        nombre, 
-        cedula, 
-        seccion, 
-        hora: new Date().toLocaleTimeString() 
-    };
+    const h = { id: Date.now(), nombre, cedula, seccion, hora: new Date().toLocaleTimeString() };
     db.ref('asistencias_unefa').push(h);
 }
 
-// Remoción individual de asistencias
 function quitar(idFirebase) {
-    if(confirm("¿Desea remover este registro de acompañamiento de la nube?")) {
-        db.ref(`asistencias_unefa/${idFirebase}`).remove();
-    }
+    if(confirm("¿Desea remover este registro?")) { db.ref(`asistencias_unefa/${idFirebase}`).remove(); }
 }
 
-// Limpieza total del historial
 function borrarHistorial() {
-    if(confirm("¿Borrar todos los registros de la base de datos en Firebase?")) {
-        db.ref('asistencias_unefa').remove();
-    }
+    if(confirm("¿Borrar todos los registros?")) { db.ref('asistencias_unefa').remove(); }
 }
 
 function renderHistorial() {
     const lista = document.getElementById('listaHistorial');
     lista.innerHTML = historial.length === 0 ? "<p style='color:#999'>No hay registros hoy.</p>" : "";
-    
     historial.forEach(h => {
         const div = document.createElement('div');
         div.className = 'historial-item';
-        
         div.innerHTML = `
-            <div>
-                <b>${h.nombre}</b> <small>(${h.seccion})</small><br>
-                <span style="font-size:10px">${h.hora}</span>
-            </div>
+            <div><b>${h.nombre}</b> <small>(${h.seccion})</small><br><span style="font-size:10px">${h.hora}</span></div>
             <button onclick="quitar('${h.idFirebase}')" style="color:var(--danger); border:none; background:none; cursor:pointer">✖</button>
         `;
         lista.appendChild(div);
     });
 }
 
-// Asignación de eventos limpia
 document.getElementById('filtroCarrera').addEventListener('change', filtrar);
 document.getElementById('filtroDia').addEventListener('change', filtrar);
 document.getElementById('filtroBusqueda').addEventListener('input', filtrar);
 
-// Inicializar ejecución al cargar
 filtrar();
 </script>
 </body>
